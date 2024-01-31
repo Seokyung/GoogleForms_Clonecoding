@@ -1,5 +1,6 @@
 import { TextField } from "@mui/material";
 import React, { useState } from "react";
+import { SurveyBox } from "../../styles/SurveyBox";
 
 interface IForm {
 	title: string;
@@ -16,7 +17,7 @@ const TitleForm = (formObj: IForm) => {
 	};
 
 	return (
-		<div>
+		<SurveyBox>
 			<TextField
 				id="title"
 				variant="standard"
@@ -33,7 +34,7 @@ const TitleForm = (formObj: IForm) => {
 				value={description}
 				onChange={onTextChange}
 			/>
-		</div>
+		</SurveyBox>
 	);
 };
 
