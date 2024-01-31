@@ -8,6 +8,7 @@ import {
 	ShortText,
 	Subject,
 } from "@mui/icons-material";
+import QuestionOption from "./QuestionOption";
 
 export const questionOptions = [
 	{
@@ -24,7 +25,7 @@ export const questionOptions = [
 	},
 	{
 		idx: 2,
-		id: "optional",
+		id: "radio",
 		icon: <RadioButtonChecked />,
 		text: "객관식 질문",
 	},
@@ -43,7 +44,7 @@ export const questionOptions = [
 ];
 
 const QuestionForm = () => {
-	const [selectedIdx, setSelectedIdx] = useState<number>(0);
+	const [selectedIdx, setSelectedIdx] = useState<number>(2);
 
 	return (
 		<SurveyBox>
@@ -51,7 +52,7 @@ const QuestionForm = () => {
 				selectedIdx={selectedIdx}
 				setSelectedIdx={setSelectedIdx}
 			/>
-			<div>{questionOptions[selectedIdx].text}</div>
+			<QuestionOption selectedIdx={selectedIdx} />
 		</SurveyBox>
 	);
 };
