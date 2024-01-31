@@ -5,7 +5,7 @@ export const SurveyBox = styled.div`
 	flex-direction: column;
 	width: 100%;
 	min-width: 700px;
-	padding: 2rem;
+	padding: 1.5rem;
 	border: 1px solid rgba(0, 0, 0, 0.2);
 	border-radius: 10px;
 	background-color: #fff;
