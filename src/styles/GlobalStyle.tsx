@@ -7,6 +7,7 @@ export const GlobalStyle = createGlobalStyle`
     -moz-osx-font-smoothing: grayscale;
   }
   body {
+    color:#111;
     background-color: lavender;
   }
   a {
