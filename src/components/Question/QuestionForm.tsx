@@ -3,12 +3,16 @@ import QuestionHeader from "./QuestionHeader";
 import { SurveyBox } from "../../styles/SurveyBox";
 import {
 	CheckBoxOutlined,
+	ContentCopy,
+	DeleteOutline,
 	ExpandCircleDownOutlined,
 	RadioButtonChecked,
 	ShortText,
 	Subject,
 } from "@mui/icons-material";
 import QuestionOption from "./QuestionOption";
+import { Button } from "@mui/material";
+import { IQListProps } from "../Survey/SurveyForm";
 
 export const questionOptions = [
 	{
@@ -43,16 +47,38 @@ export const questionOptions = [
 	},
 ];
 
-const QuestionForm = () => {
-	const [selectedIdx, setSelectedIdx] = useState<number>(2);
+interface IQForm {
+	question: IQListProps;
+	questionIdx: number;
+	questionList: IQListProps[];
+	setQuestionList: React.Dispatch<React.SetStateAction<IQListProps[]>>;
+}
+
+const QuestionForm = (props: IQForm) => {
+	const [optionIdx, setOptionIdx] = useState<number>(2);
+
+	const deleteQuestion = () => {
+		console.log(props.questionList);
+		console.log(props.question);
+		// props.setQuestionList(props.questionList.splice(props.questionIdx, 1));
+	};
 
 	return (
 		<SurveyBox>
 			<QuestionHeader
-				selectedIdx={selectedIdx}
-				setSelectedIdx={setSelectedIdx}
+				questionIdx={props.questionIdx}
+				optionIdx={optionIdx}
+				setOptionIdx={setOptionIdx}
 			/>
-			<QuestionOption selectedIdx={selectedIdx} />
+			<QuestionOption optionIdx={optionIdx} />
+			<div>
+				<Button>
+					<ContentCopy />
+				</Button>
+				<Button onClick={deleteQuestion}>
+					<DeleteOutline />
+				</Button>
+			</div>
 		</SurveyBox>
 	);
 };

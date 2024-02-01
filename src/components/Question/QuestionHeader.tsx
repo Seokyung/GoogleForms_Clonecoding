@@ -12,12 +12,13 @@ import {
 import styled from "styled-components";
 import { questionOptions } from "./QuestionForm";
 
-interface IQuestionIdx {
-	selectedIdx: number;
-	setSelectedIdx: React.Dispatch<React.SetStateAction<number>>;
+interface IQHeader {
+	questionIdx: number;
+	optionIdx: number;
+	setOptionIdx: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const QuestionHeader = (questionIdx: IQuestionIdx) => {
+const QuestionHeader = (props: IQHeader) => {
 	const [question, setQuestion] = useState<string>("");
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const isOpened = Boolean(anchorEl);
@@ -39,7 +40,7 @@ const QuestionHeader = (questionIdx: IQuestionIdx) => {
 		e: React.MouseEvent<HTMLElement>,
 		idx: number
 	) => {
-		questionIdx.setSelectedIdx(idx);
+		props.setOptionIdx(idx);
 		setAnchorEl(null);
 	};
 
@@ -58,10 +59,10 @@ const QuestionHeader = (questionIdx: IQuestionIdx) => {
 			<Button
 				variant="outlined"
 				onClick={openMenu}
-				startIcon={questionOptions[questionIdx.selectedIdx].icon}
+				startIcon={questionOptions[props.optionIdx].icon}
 				endIcon={<ArrowDropDownOutlined />}
 			>
-				{questionOptions[questionIdx.selectedIdx].text}
+				{questionOptions[props.optionIdx].text}
 			</Button>
 			<Menu
 				open={isOpened}

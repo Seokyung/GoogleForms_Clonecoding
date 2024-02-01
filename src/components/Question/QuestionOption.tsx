@@ -3,12 +3,12 @@ import { questionOptions } from "./QuestionForm";
 import { TextField } from "@mui/material";
 
 interface IQuestionIdx {
-	selectedIdx: number;
+	optionIdx: number;
 }
 
 const QuestionOption = (questionIdx: IQuestionIdx) => {
 	const renderOption = () => {
-		switch (questionIdx.selectedIdx) {
+		switch (questionIdx.optionIdx) {
 			case 0:
 				return (
 					<TextField
@@ -22,18 +22,18 @@ const QuestionOption = (questionIdx: IQuestionIdx) => {
 				return (
 					<TextField
 						variant="standard"
-						placeholder="단답형 텍스트"
+						placeholder="장문형 텍스트"
 						disabled
 						multiline
 						margin="dense"
 					/>
 				);
 			case 2:
-				return <div>{questionOptions[questionIdx.selectedIdx].text}</div>;
+				return <div>{questionOptions[questionIdx.optionIdx].text}</div>;
 			case 3:
-				return <div>{questionOptions[questionIdx.selectedIdx].text}</div>;
+				return <div>{questionOptions[questionIdx.optionIdx].text}</div>;
 			case 4:
-				return <div>{questionOptions[questionIdx.selectedIdx].text}</div>;
+				return <div>{questionOptions[questionIdx.optionIdx].text}</div>;
 			default:
 				break;
 		}
