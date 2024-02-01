@@ -11,12 +11,12 @@ interface IQList {
 const QuestionList = (props: IQList) => {
 	return (
 		<Container>
-			{props.questionList.map((item) => {
+			{props.questionList.map((item, idx) => {
 				return (
 					<QuestionForm
 						key={item.id}
 						question={item}
-						questionIdx={item.id}
+						questionIdx={idx}
 						questionList={props.questionList}
 						setQuestionList={props.setQuestionList}
 					/>

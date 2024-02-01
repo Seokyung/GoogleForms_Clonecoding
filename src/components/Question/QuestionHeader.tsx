@@ -11,15 +11,16 @@ import {
 } from "@mui/material";
 import styled from "styled-components";
 import { questionOptions } from "../../datas/questionOptions";
+import { IQuestionList } from "../Survey/SurveyForm";
 
 interface IQHeader {
-	questionIdx: number;
+	question: IQuestionList;
 	optionIdx: number;
 	setOptionIdx: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const QuestionHeader = (props: IQHeader) => {
-	const [question, setQuestion] = useState<string>("");
+	const [question, setQuestion] = useState<string>(props.question.title);
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const isOpened = Boolean(anchorEl);
 

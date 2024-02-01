@@ -4,7 +4,8 @@ import QuestionOption from "./QuestionOption";
 import { IQuestionList } from "../Survey/SurveyForm";
 import { SurveyBox } from "../../styles/SurveyBox";
 import { ContentCopy, DeleteOutline } from "@mui/icons-material";
-import { Button } from "@mui/material";
+import { Button, Divider, FormControlLabel, Switch } from "@mui/material";
+import styled from "styled-components";
 
 interface IQForm {
 	question: IQuestionList;
@@ -24,23 +25,39 @@ const QuestionForm = (props: IQForm) => {
 
 	return (
 		<SurveyBox>
-			<h2>{props.question.id}</h2>
 			<QuestionHeader
-				questionIdx={props.questionIdx}
+				question={props.question}
 				optionIdx={optionIdx}
 				setOptionIdx={setOptionIdx}
 			/>
 			<QuestionOption optionIdx={optionIdx} />
-			<div>
-				<Button>
-					<ContentCopy />
-				</Button>
-				<Button onClick={deleteQuestion}>
-					<DeleteOutline />
-				</Button>
-			</div>
+			<Divider sx={{ margin: "1rem 0" }} />
+			<FooterContainer>
+				<div>
+					<Button>
+						<ContentCopy />
+					</Button>
+					<Button onClick={deleteQuestion}>
+						<DeleteOutline />
+					</Button>
+				</div>
+				<Divider orientation="vertical" />
+				<div>
+					<FormControlLabel
+						label="필수"
+						labelPlacement="start"
+						control={<Switch />}
+					/>
+				</div>
+			</FooterContainer>
 		</SurveyBox>
 	);
 };
+
+const FooterContainer = styled.div`
+	display: flex;
+	justify-content: right;
+	align-items: center;
+`;
 
 export default QuestionForm;
