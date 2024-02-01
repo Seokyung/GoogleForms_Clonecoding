@@ -10,7 +10,7 @@ import {
 	TextField,
 } from "@mui/material";
 import styled from "styled-components";
-import { questionOptions } from "./QuestionForm";
+import { questionOptions } from "../../datas/questionOptions";
 
 interface IQHeader {
 	questionIdx: number;
@@ -72,9 +72,9 @@ const QuestionHeader = (props: IQHeader) => {
 			>
 				{questionOptions.slice(0, 2).map((item) => (
 					<MenuItem
-						key={item.idx}
-						id={item.id}
-						onClick={(e) => handleMenuItemClick(e, item.idx)}
+						key={item.id}
+						id={item.name}
+						onClick={(e) => handleMenuItemClick(e, item.id)}
 					>
 						<ListItemIcon>{item.icon}</ListItemIcon>
 						<ListItemText>{item.text}</ListItemText>
@@ -83,9 +83,9 @@ const QuestionHeader = (props: IQHeader) => {
 				<Divider />
 				{questionOptions.slice(2).map((item) => (
 					<MenuItem
-						key={item.idx}
-						id={item.id}
-						onClick={(e) => handleMenuItemClick(e, item.idx)}
+						key={item.id}
+						id={item.name}
+						onClick={(e) => handleMenuItemClick(e, item.id)}
 					>
 						<ListItemIcon>{item.icon}</ListItemIcon>
 						<ListItemText>{item.text}</ListItemText>

@@ -1,11 +1,11 @@
 import React from "react";
 import QuestionForm from "./QuestionForm";
 import styled from "styled-components";
-import { IQListProps } from "../Survey/SurveyForm";
+import { IQuestionList } from "../Survey/SurveyForm";
 
 interface IQList {
-	questionList: IQListProps[];
-	setQuestionList: React.Dispatch<React.SetStateAction<IQListProps[]>>;
+	questionList: IQuestionList[];
+	setQuestionList: React.Dispatch<React.SetStateAction<IQuestionList[]>>;
 }
 
 const QuestionList = (props: IQList) => {

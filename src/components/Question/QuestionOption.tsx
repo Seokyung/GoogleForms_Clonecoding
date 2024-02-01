@@ -1,5 +1,5 @@
 import React from "react";
-import { questionOptions } from "./QuestionForm";
+import { questionOptions } from "../../datas/questionOptions";
 import { TextField } from "@mui/material";
 
 interface IQuestionIdx {
