@@ -1,12 +1,12 @@
 import React from "react";
-import { questionOptions } from "../../datas/questionOptions";
+import { OptionEnum } from "../../datas/OptionEnum";
 import { TextField } from "@mui/material";
 
 interface IQuestionIdx {
 	optionIdx: number;
 }
 
-const QuestionOption = (questionIdx: IQuestionIdx) => {
+const QuestionContent = (questionIdx: IQuestionIdx) => {
 	const renderOption = () => {
 		switch (questionIdx.optionIdx) {
 			case 0:
@@ -29,11 +29,11 @@ const QuestionOption = (questionIdx: IQuestionIdx) => {
 					/>
 				);
 			case 2:
-				return <div>{questionOptions[questionIdx.optionIdx].text}</div>;
+				return <div>{OptionEnum[questionIdx.optionIdx].text}</div>;
 			case 3:
-				return <div>{questionOptions[questionIdx.optionIdx].text}</div>;
+				return <div>{OptionEnum[questionIdx.optionIdx].text}</div>;
 			case 4:
-				return <div>{questionOptions[questionIdx.optionIdx].text}</div>;
+				return <div>{OptionEnum[questionIdx.optionIdx].text}</div>;
 			default:
 				break;
 		}
@@ -42,4 +42,4 @@ const QuestionOption = (questionIdx: IQuestionIdx) => {
 	return <div>{renderOption()}</div>;
 };
 
-export default QuestionOption;
+export default QuestionContent;

@@ -7,23 +7,26 @@ import QuestionList from "../Question/QuestionList";
 import { nanoid } from "nanoid";
 
 export interface IQuestionList {
-	id: string;
+	qid: string;
 	title: string;
 	optionId: number;
+	optionData?: object;
+	isRequired: boolean;
 }
 
 const SurveyForm = () => {
 	const [questionList, setQuestionList] = useState<Array<IQuestionList>>([
-		{ id: nanoid(), title: "", optionId: 2 },
+		{ qid: nanoid(), title: "", optionId: 2, isRequired: false },
 	]);
 
 	const addQuestion = (e: React.MouseEvent<HTMLButtonElement>) => {
 		setQuestionList((questionList) => [
 			...questionList,
 			{
-				id: nanoid(),
+				qid: nanoid(),
 				title: "",
 				optionId: 2,
+				isRequired: false,
 			},
 		]);
 		console.log(questionList);

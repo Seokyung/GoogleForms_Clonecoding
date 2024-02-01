@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import QuestionHeader from "./QuestionHeader";
-import QuestionOption from "./QuestionOption";
+import QuestionContent from "./QuestionContent";
 import { IQuestionList } from "../Survey/SurveyForm";
 import { SurveyBox } from "../../styles/SurveyBox";
-import { ContentCopy, DeleteOutline } from "@mui/icons-material";
-import { Button, Divider, FormControlLabel, Switch } from "@mui/material";
-import styled from "styled-components";
+import { Divider } from "@mui/material";
+import QuestionFooter from "./QuestionFooter";
 
 interface IQForm {
 	question: IQuestionList;
@@ -19,7 +18,7 @@ const QuestionForm = (props: IQForm) => {
 
 	const deleteQuestion = () => {
 		props.setQuestionList(
-			props.questionList.filter((el) => el.id !== props.question.id)
+			props.questionList.filter((el) => el.qid !== props.question.qid)
 		);
 	};
 
@@ -29,35 +28,15 @@ const QuestionForm = (props: IQForm) => {
 				question={props.question}
 				optionIdx={optionIdx}
 				setOptionIdx={setOptionIdx}
+				questionIdx={props.questionIdx}
+				questionList={props.questionList}
+				setQuestionList={props.setQuestionList}
 			/>
-			<QuestionOption optionIdx={optionIdx} />
+			<QuestionContent optionIdx={optionIdx} />
 			<Divider sx={{ margin: "1rem 0" }} />
-			<FooterContainer>
-				<div>
-					<Button>
-						<ContentCopy />
-					</Button>
-					<Button onClick={deleteQuestion}>
-						<DeleteOutline />
-					</Button>
-				</div>
-				<Divider orientation="vertical" />
-				<div>
-					<FormControlLabel
-						label="필수"
-						labelPlacement="start"
-						control={<Switch />}
-					/>
-				</div>
-			</FooterContainer>
+			<QuestionFooter onDelete={deleteQuestion} />
 		</SurveyBox>
 	);
 };
-
-const FooterContainer = styled.div`
-	display: flex;
-	justify-content: right;
-	align-items: center;
-`;
 
 export default QuestionForm;

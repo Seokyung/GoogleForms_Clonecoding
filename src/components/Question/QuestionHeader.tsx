@@ -10,23 +10,39 @@ import {
 	TextField,
 } from "@mui/material";
 import styled from "styled-components";
-import { questionOptions } from "../../datas/questionOptions";
+import { OptionEnum } from "../../datas/OptionEnum";
 import { IQuestionList } from "../Survey/SurveyForm";
 
 interface IQHeader {
 	question: IQuestionList;
 	optionIdx: number;
 	setOptionIdx: React.Dispatch<React.SetStateAction<number>>;
+	questionIdx: number;
+	questionList: IQuestionList[];
+	setQuestionList: React.Dispatch<React.SetStateAction<IQuestionList[]>>;
 }
 
 const QuestionHeader = (props: IQHeader) => {
-	const [question, setQuestion] = useState<string>(props.question.title);
+	const [questionTitle, setQuestionTitle] = useState<string>(
+		props.question.title
+	);
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const isOpened = Boolean(anchorEl);
 
 	const onTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { value } = e.target;
-		setQuestion(value);
+		setQuestionTitle(value);
+		props.setQuestionList([
+			...props.questionList.slice(0, props.questionIdx),
+			{
+				...props.question,
+				title: value,
+			},
+			...props.questionList.slice(
+				props.questionIdx + 1,
+				props.questionList.length
+			),
+		]);
 	};
 
 	const openMenu = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -42,6 +58,17 @@ const QuestionHeader = (props: IQHeader) => {
 		idx: number
 	) => {
 		props.setOptionIdx(idx);
+		props.setQuestionList([
+			...props.questionList.slice(0, props.questionIdx),
+			{
+				...props.question,
+				optionId: idx,
+			},
+			...props.questionList.slice(
+				props.questionIdx + 1,
+				props.questionList.length
+			),
+		]);
 		setAnchorEl(null);
 	};
 
@@ -54,16 +81,16 @@ const QuestionHeader = (props: IQHeader) => {
 				margin="dense"
 				// fullWidth
 				multiline={true}
-				value={question}
+				value={questionTitle}
 				onChange={onTextChange}
 			/>
 			<Button
 				variant="outlined"
 				onClick={openMenu}
-				startIcon={questionOptions[props.optionIdx].icon}
+				startIcon={OptionEnum[props.optionIdx].icon}
 				endIcon={<ArrowDropDownOutlined />}
 			>
-				{questionOptions[props.optionIdx].text}
+				{OptionEnum[props.optionIdx].text}
 			</Button>
 			<Menu
 				open={isOpened}
@@ -71,22 +98,22 @@ const QuestionHeader = (props: IQHeader) => {
 				anchorEl={anchorEl}
 				anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
 			>
-				{questionOptions.slice(0, 2).map((item) => (
+				{OptionEnum.slice(0, 2).map((item) => (
 					<MenuItem
-						key={item.id}
+						key={item.oid}
 						id={item.name}
-						onClick={(e) => handleMenuItemClick(e, item.id)}
+						onClick={(e) => handleMenuItemClick(e, item.oid)}
 					>
 						<ListItemIcon>{item.icon}</ListItemIcon>
 						<ListItemText>{item.text}</ListItemText>
 					</MenuItem>
 				))}
 				<Divider />
-				{questionOptions.slice(2).map((item) => (
+				{OptionEnum.slice(2).map((item) => (
 					<MenuItem
-						key={item.id}
+						key={item.oid}
 						id={item.name}
-						onClick={(e) => handleMenuItemClick(e, item.id)}
+						onClick={(e) => handleMenuItemClick(e, item.oid)}
 					>
 						<ListItemIcon>{item.icon}</ListItemIcon>
 						<ListItemText>{item.text}</ListItemText>

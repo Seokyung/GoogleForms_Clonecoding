@@ -14,7 +14,7 @@ const QuestionList = (props: IQList) => {
 			{props.questionList.map((item, idx) => {
 				return (
 					<QuestionForm
-						key={item.id}
+						key={item.qid}
 						question={item}
 						questionIdx={idx}
 						questionList={props.questionList}
