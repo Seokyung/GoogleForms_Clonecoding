@@ -29,7 +29,9 @@ const QuestionList = (props: IQList) => {
 const Container = styled.div`
 	display: flex;
 	flex-direction: column;
+	align-items: center;
 	gap: 0.75rem;
+	width: 100%;
 `;
 
 export default QuestionList;

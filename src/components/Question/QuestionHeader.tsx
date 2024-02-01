@@ -77,12 +77,16 @@ const QuestionHeader = (props: IQHeader) => {
 				variant="filled"
 				placeholder="질문"
 				margin="dense"
-				// fullWidth
+				fullWidth
 				multiline={true}
 				value={questionTitle}
 				onChange={onTextChange}
 			/>
 			<Button
+				sx={{
+					minWidth: "168px",
+					minHeight: "48px",
+				}}
 				variant="outlined"
 				onClick={openMenu}
 				startIcon={OptionEnum[props.question.optionId].icon}
@@ -126,7 +130,7 @@ const Container = styled.div`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	gap: 0.25rem;
+	gap: 1rem;
 `;
 
 const QuestionField = styled(TextField)(() => ({

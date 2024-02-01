@@ -16,8 +16,8 @@ function App() {
 
 const AppContainer = styled.div`
 	display: flex;
-	justify-content: center;
-	padding: 1.25rem;
+	padding: 1rem;
+	width: 100%;
 `;
 
 export default App;
