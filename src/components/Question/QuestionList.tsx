@@ -1,7 +1,7 @@
 import React from "react";
 import QuestionForm from "./QuestionForm";
+import { IQuestionList } from "../../interfaces/IQuestionList";
 import styled from "styled-components";
-import { IQuestionList } from "../Survey/SurveyForm";
 
 interface IQList {
 	questionList: IQuestionList[];

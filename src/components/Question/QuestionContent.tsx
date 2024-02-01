@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { IQuestionList } from "../../interfaces/IQuestionList";
 import {
 	FormControl,
 	FormControlLabel,
@@ -7,7 +8,6 @@ import {
 	TextField,
 } from "@mui/material";
 import { CheckBox } from "@mui/icons-material";
-import { IQuestionList } from "../Survey/SurveyForm";
 
 interface IQuestionIdx {
 	question: IQuestionList;

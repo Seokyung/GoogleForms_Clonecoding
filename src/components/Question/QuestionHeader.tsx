@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { OptionEnum } from "../../datas/OptionEnum";
+import { IQuestionList } from "../../interfaces/IQuestionList";
 import { ArrowDropDownOutlined } from "@mui/icons-material";
 import {
 	Button,
@@ -10,8 +12,6 @@ import {
 	TextField,
 } from "@mui/material";
 import styled from "styled-components";
-import { OptionEnum } from "../../datas/OptionEnum";
-import { IQuestionList } from "../Survey/SurveyForm";
 
 interface IQHeader {
 	question: IQuestionList;

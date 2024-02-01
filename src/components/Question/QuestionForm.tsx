@@ -1,7 +1,7 @@
 import React from "react";
 import QuestionHeader from "./QuestionHeader";
 import QuestionContent from "./QuestionContent";
-import { IQuestionList } from "../Survey/SurveyForm";
+import { IQuestionList } from "../../interfaces/IQuestionList";
 import { SurveyBox } from "../../styles/SurveyBox";
 import { Divider } from "@mui/material";
 import QuestionFooter from "./QuestionFooter";

@@ -1,18 +1,11 @@
 import React, { useState } from "react";
+import { nanoid } from "nanoid";
+import { IQuestionList } from "../../interfaces/IQuestionList";
 import TitleForm from "../Title/TitleForm";
+import QuestionList from "../Question/QuestionList";
 import styled from "styled-components";
 import { Button } from "@mui/material";
 import { AddCircleOutlineOutlined } from "@mui/icons-material";
-import QuestionList from "../Question/QuestionList";
-import { nanoid } from "nanoid";
-
-export interface IQuestionList {
-	qid: string;
-	title: string;
-	optionId: number;
-	optionData?: object;
-	isRequired: boolean;
-}
 
 const SurveyForm = () => {
 	const [questionList, setQuestionList] = useState<Array<IQuestionList>>([
