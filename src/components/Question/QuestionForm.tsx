@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import QuestionHeader from "./QuestionHeader";
 import QuestionContent from "./QuestionContent";
 import { IQuestionList } from "../Survey/SurveyForm";
 import { SurveyBox } from "../../styles/SurveyBox";
 import { Divider } from "@mui/material";
 import QuestionFooter from "./QuestionFooter";
+import { nanoid } from "nanoid";
 
 interface IQForm {
 	question: IQuestionList;
@@ -14,27 +15,37 @@ interface IQForm {
 }
 
 const QuestionForm = (props: IQForm) => {
-	const [optionIdx, setOptionIdx] = useState<number>(2);
-
 	const deleteQuestion = () => {
 		props.setQuestionList(
 			props.questionList.filter((el) => el.qid !== props.question.qid)
 		);
 	};
 
+	const copyQuestion = () => {
+		props.setQuestionList([
+			...props.questionList.slice(0, props.questionIdx + 1),
+			{
+				...props.question,
+				qid: nanoid(),
+			},
+			...props.questionList.slice(
+				props.questionIdx + 2,
+				props.questionList.length
+			),
+		]);
+	};
+
 	return (
 		<SurveyBox>
 			<QuestionHeader
 				question={props.question}
-				optionIdx={optionIdx}
-				setOptionIdx={setOptionIdx}
 				questionIdx={props.questionIdx}
 				questionList={props.questionList}
 				setQuestionList={props.setQuestionList}
 			/>
-			<QuestionContent optionIdx={optionIdx} />
+			<QuestionContent question={props.question} />
 			<Divider sx={{ margin: "1rem 0" }} />
-			<QuestionFooter onDelete={deleteQuestion} />
+			<QuestionFooter onCopy={copyQuestion} onDelete={deleteQuestion} />
 		</SurveyBox>
 	);
 };

@@ -1,20 +1,35 @@
-import React from "react";
-import { OptionEnum } from "../../datas/OptionEnum";
-import { TextField } from "@mui/material";
+import React, { useState } from "react";
+import {
+	FormControl,
+	FormControlLabel,
+	Radio,
+	RadioGroup,
+	TextField,
+} from "@mui/material";
+import { CheckBox } from "@mui/icons-material";
+import { IQuestionList } from "../Survey/SurveyForm";
 
 interface IQuestionIdx {
-	optionIdx: number;
+	question: IQuestionList;
 }
 
-const QuestionContent = (questionIdx: IQuestionIdx) => {
+const QuestionContent = (props: IQuestionIdx) => {
+	const [isPreview, setIsPreview] = useState<boolean>(true);
+	const [optionText, setOptionText] = useState<string>("옵션");
+
+	const onTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const { value } = e.target;
+		setOptionText(value);
+	};
+
 	const renderOption = () => {
-		switch (questionIdx.optionIdx) {
+		switch (props.question.optionId) {
 			case 0:
 				return (
 					<TextField
 						variant="standard"
 						placeholder="단답형 텍스트"
-						disabled
+						disabled={isPreview}
 						margin="dense"
 					/>
 				);
@@ -23,17 +38,54 @@ const QuestionContent = (questionIdx: IQuestionIdx) => {
 					<TextField
 						variant="standard"
 						placeholder="장문형 텍스트"
-						disabled
+						disabled={isPreview}
 						multiline
 						margin="dense"
 					/>
 				);
 			case 2:
-				return <div>{OptionEnum[questionIdx.optionIdx].text}</div>;
+				return (
+					<FormControl>
+						<RadioGroup>
+							<FormControlLabel
+								control={<Radio />}
+								label={
+									<TextField
+										variant="standard"
+										value={optionText}
+										onChange={onTextChange}
+										margin="normal"
+									/>
+								}
+							/>
+						</RadioGroup>
+					</FormControl>
+				);
 			case 3:
-				return <div>{OptionEnum[questionIdx.optionIdx].text}</div>;
+				return (
+					<FormControl>
+						<FormControlLabel
+							control={<CheckBox />}
+							label={
+								<TextField
+									variant="standard"
+									value={optionText}
+									onChange={onTextChange}
+									margin="normal"
+								/>
+							}
+						/>
+					</FormControl>
+				);
 			case 4:
-				return <div>{OptionEnum[questionIdx.optionIdx].text}</div>;
+				return (
+					<TextField
+						variant="standard"
+						value={optionText}
+						onChange={onTextChange}
+						margin="normal"
+					/>
+				);
 			default:
 				break;
 		}

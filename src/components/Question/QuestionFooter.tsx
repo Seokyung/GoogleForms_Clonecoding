@@ -4,6 +4,7 @@ import { Button, Divider, FormControlLabel, Switch } from "@mui/material";
 import styled from "styled-components";
 
 interface IQuestionFooter {
+	onCopy: () => void;
 	onDelete: () => void;
 }
 
@@ -11,7 +12,7 @@ const QuestionFooter = (props: IQuestionFooter) => {
 	return (
 		<FooterContainer>
 			<div>
-				<Button>
+				<Button onClick={props.onCopy}>
 					<ContentCopy />
 				</Button>
 				<Button onClick={props.onDelete}>

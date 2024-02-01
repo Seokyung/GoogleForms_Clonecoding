@@ -15,8 +15,6 @@ import { IQuestionList } from "../Survey/SurveyForm";
 
 interface IQHeader {
 	question: IQuestionList;
-	optionIdx: number;
-	setOptionIdx: React.Dispatch<React.SetStateAction<number>>;
 	questionIdx: number;
 	questionList: IQuestionList[];
 	setQuestionList: React.Dispatch<React.SetStateAction<IQuestionList[]>>;
@@ -57,7 +55,7 @@ const QuestionHeader = (props: IQHeader) => {
 		e: React.MouseEvent<HTMLElement>,
 		idx: number
 	) => {
-		props.setOptionIdx(idx);
+		// props.setOptionIdx(idx);
 		props.setQuestionList([
 			...props.questionList.slice(0, props.questionIdx),
 			{
@@ -87,10 +85,10 @@ const QuestionHeader = (props: IQHeader) => {
 			<Button
 				variant="outlined"
 				onClick={openMenu}
-				startIcon={OptionEnum[props.optionIdx].icon}
+				startIcon={OptionEnum[props.question.optionId].icon}
 				endIcon={<ArrowDropDownOutlined />}
 			>
-				{OptionEnum[props.optionIdx].text}
+				{OptionEnum[props.question.optionId].text}
 			</Button>
 			<Menu
 				open={isOpened}
