@@ -5,6 +5,8 @@ import OptionList from "../Option/OptionList";
 
 interface IQuestionContent {
 	question: IQuestion;
+	questionList: IQuestion[];
+	setQuestionList: React.Dispatch<React.SetStateAction<IQuestion[]>>;
 }
 
 const QuestionContent = (props: IQuestionContent) => {
@@ -15,11 +17,32 @@ const QuestionContent = (props: IQuestionContent) => {
 			case 1:
 				return <OptionText isLong={true} placeholderText="장문형 텍스트" />;
 			case 2:
-				return <OptionList optionType="radio" question={props.question} />;
+				return (
+					<OptionList
+						optionType="radio"
+						question={props.question}
+						questionList={props.questionList}
+						setQuestionList={props.setQuestionList}
+					/>
+				);
 			case 3:
-				return <OptionList optionType="checkbox" question={props.question} />;
+				return (
+					<OptionList
+						optionType="checkbox"
+						question={props.question}
+						questionList={props.questionList}
+						setQuestionList={props.setQuestionList}
+					/>
+				);
 			case 4:
-				return <OptionList optionType="dropdown" question={props.question} />;
+				return (
+					<OptionList
+						optionType="dropdown"
+						question={props.question}
+						questionList={props.questionList}
+						setQuestionList={props.setQuestionList}
+					/>
+				);
 			default:
 				break;
 		}

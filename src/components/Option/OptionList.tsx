@@ -17,15 +17,17 @@ import {
 	RadioButtonUnchecked,
 } from "@mui/icons-material";
 
-interface IOptionType {
+interface IOptionListProps {
 	optionType: string;
 	question: IQuestion;
+	questionList: IQuestion[];
+	setQuestionList: React.Dispatch<React.SetStateAction<IQuestion[]>>;
 }
 
-const OptionList = (props: IOptionType) => {
-	const [optionList, setOptionList] = useState<IOptionList[]>([
-		{ id: nanoid(), text: "옵션 1" },
-	]);
+const OptionList = (props: IOptionListProps) => {
+	const [optionList, setOptionList] = useState<IOptionList[]>(
+		props.question.optionData.options
+	);
 	const [optionIdx, setOptionIdx] = useState<number>(2);
 	const [isEtcAdded, setIsEtcAdded] = useState<boolean>(false);
 
@@ -61,36 +63,40 @@ const OptionList = (props: IOptionType) => {
 	};
 
 	const addOption = (e: React.MouseEvent) => {
+		let newOptionList: IOptionList[];
 		if (isEtcAdded) {
-			setOptionList([
+			newOptionList = [
 				...optionList.slice(0, optionList.length - 1),
 				{
 					id: nanoid(),
 					text: `옵션 ${optionIdx}`,
 				},
 				optionList[optionList.length - 1],
-			]);
+			];
+			setOptionList(newOptionList);
 		} else {
-			setOptionList((optionList) => [
+			newOptionList = [
 				...optionList,
 				{
 					id: nanoid(),
 					text: `옵션 ${optionIdx}`,
 				},
-			]);
+			];
+			setOptionList(newOptionList);
 		}
 		setOptionIdx((prev) => prev + 1);
 	};
 
 	const addEtc = (e: React.MouseEvent<HTMLButtonElement>) => {
 		if (!isEtcAdded) {
-			setOptionList((optionList) => [
+			const newOptionList: IOptionList[] = [
 				...optionList,
 				{
 					id: nanoid(),
 					text: "기타...",
 				},
-			]);
+			];
+			setOptionList(newOptionList);
 			setIsEtcAdded(true);
 		}
 	};
@@ -100,11 +106,10 @@ const OptionList = (props: IOptionType) => {
 			if (isEtcAdded && optionList[optionList.length - 1].id === deleteId) {
 				setIsEtcAdded((prev) => !prev);
 			}
-			setOptionList(
-				optionList.filter((el) => {
-					return el.id !== deleteId;
-				})
-			);
+			const newOptionList: IOptionList[] = optionList.filter((el) => {
+				return el.id !== deleteId;
+			});
+			setOptionList(newOptionList);
 		}
 	};
 

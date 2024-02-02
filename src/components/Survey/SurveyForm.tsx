@@ -13,7 +13,10 @@ const SurveyForm = () => {
 			qid: nanoid(),
 			title: "",
 			optionId: 2,
-			optionData: { options: [], isEtcAdded: false, etcText: "" },
+			optionData: {
+				options: [{ id: nanoid(), text: "옵션 추가" }],
+				isEtcAdded: false,
+			},
 			isRequired: false,
 		},
 	]);
@@ -25,7 +28,10 @@ const SurveyForm = () => {
 				qid: nanoid(),
 				title: "",
 				optionId: 2,
-				optionData: { options: [], isEtcAdded: false, etcText: "" },
+				optionData: {
+					options: [{ id: nanoid(), text: "옵션 추가" }],
+					isEtcAdded: false,
+				},
 				isRequired: false,
 			},
 		]);

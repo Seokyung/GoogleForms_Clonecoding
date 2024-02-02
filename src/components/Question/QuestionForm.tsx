@@ -43,7 +43,11 @@ const QuestionForm = (props: IQForm) => {
 				questionList={props.questionList}
 				setQuestionList={props.setQuestionList}
 			/>
-			<QuestionContent question={props.question} />
+			<QuestionContent
+				question={props.question}
+				questionList={props.questionList}
+				setQuestionList={props.setQuestionList}
+			/>
 			<Divider sx={{ margin: "1rem 0" }} />
 			<QuestionFooter onCopy={copyQuestion} onDelete={deleteQuestion} />
 		</SurveyBox>
