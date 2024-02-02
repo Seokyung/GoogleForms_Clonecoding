@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { IOptionENUM, OptionENUM } from "../../enums/OptionEnum";
-import { IQuestionList } from "../../interfaces/IQuestionList";
+import { IQuestion } from "../../interfaces/IQuestion";
 import { ArrowDropDownOutlined } from "@mui/icons-material";
 import {
 	Button,
@@ -14,10 +14,10 @@ import {
 import styled from "styled-components";
 
 interface IQHeader {
-	question: IQuestionList;
+	question: IQuestion;
 	questionIdx: number;
-	questionList: IQuestionList[];
-	setQuestionList: React.Dispatch<React.SetStateAction<IQuestionList[]>>;
+	questionList: IQuestion[];
+	setQuestionList: React.Dispatch<React.SetStateAction<IQuestion[]>>;
 }
 
 const QuestionHeader = (props: IQHeader) => {

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { nanoid } from "nanoid";
-import { IQuestionList } from "../../interfaces/IQuestionList";
+import { IQuestion } from "../../interfaces/IQuestion";
 import TitleForm from "../Title/TitleForm";
 import QuestionList from "../Question/QuestionList";
 import styled from "styled-components";
@@ -8,8 +8,14 @@ import { Button } from "@mui/material";
 import { AddCircleOutlineOutlined } from "@mui/icons-material";
 
 const SurveyForm = () => {
-	const [questionList, setQuestionList] = useState<Array<IQuestionList>>([
-		{ qid: nanoid(), title: "", optionId: 2, isRequired: false },
+	const [questionList, setQuestionList] = useState<Array<IQuestion>>([
+		{
+			qid: nanoid(),
+			title: "",
+			optionId: 2,
+			optionData: { options: [], isEtcAdded: false, etcText: "" },
+			isRequired: false,
+		},
 	]);
 
 	const addQuestion = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -19,9 +25,14 @@ const SurveyForm = () => {
 				qid: nanoid(),
 				title: "",
 				optionId: 2,
+				optionData: { options: [], isEtcAdded: false, etcText: "" },
 				isRequired: false,
 			},
 		]);
+	};
+
+	const onTest = (e: React.MouseEvent<HTMLButtonElement>) => {
+		console.log(questionList);
 	};
 
 	return (
@@ -29,6 +40,7 @@ const SurveyForm = () => {
 			<Button onClick={addQuestion}>
 				<AddCircleOutlineOutlined />
 			</Button>
+			<Button onClick={onTest}>TEST</Button>
 			<TitleForm />
 			<QuestionList
 				questionList={questionList}

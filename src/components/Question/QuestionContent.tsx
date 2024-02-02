@@ -1,10 +1,10 @@
 import React from "react";
-import { IQuestionList } from "../../interfaces/IQuestionList";
+import { IQuestion } from "../../interfaces/IQuestion";
 import OptionText from "../Option/OptionText";
 import OptionList from "../Option/OptionList";
 
 interface IQuestionContent {
-	question: IQuestionList;
+	question: IQuestion;
 }
 
 const QuestionContent = (props: IQuestionContent) => {
@@ -15,11 +15,11 @@ const QuestionContent = (props: IQuestionContent) => {
 			case 1:
 				return <OptionText isLong={true} placeholderText="장문형 텍스트" />;
 			case 2:
-				return <OptionList optionType="radio" />;
+				return <OptionList optionType="radio" question={props.question} />;
 			case 3:
-				return <OptionList optionType="checkbox" />;
+				return <OptionList optionType="checkbox" question={props.question} />;
 			case 4:
-				return <OptionList optionType="dropdown" />;
+				return <OptionList optionType="dropdown" question={props.question} />;
 			default:
 				break;
 		}

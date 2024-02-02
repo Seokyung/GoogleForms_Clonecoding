@@ -1,17 +1,17 @@
 import React from "react";
+import { nanoid } from "nanoid";
 import QuestionHeader from "./QuestionHeader";
 import QuestionContent from "./QuestionContent";
-import { IQuestionList } from "../../interfaces/IQuestionList";
+import QuestionFooter from "./QuestionFooter";
+import { IQuestion } from "../../interfaces/IQuestion";
 import { SurveyBox } from "../../styles/SurveyBox";
 import { Divider } from "@mui/material";
-import QuestionFooter from "./QuestionFooter";
-import { nanoid } from "nanoid";
 
 interface IQForm {
-	question: IQuestionList;
+	question: IQuestion;
 	questionIdx: number;
-	questionList: IQuestionList[];
-	setQuestionList: React.Dispatch<React.SetStateAction<IQuestionList[]>>;
+	questionList: IQuestion[];
+	setQuestionList: React.Dispatch<React.SetStateAction<IQuestion[]>>;
 }
 
 const QuestionForm = (props: IQForm) => {

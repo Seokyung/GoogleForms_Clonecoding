@@ -1,7 +1,8 @@
 import React, { useState } from "react";
+import { nanoid } from "nanoid";
+import { IQuestion } from "../../interfaces/IQuestion";
 import { IOptionList } from "../../interfaces/IOptionList";
 import OptionListItem from "./OptionListItem";
-import { nanoid } from "nanoid";
 import styled from "styled-components";
 import {
 	Button,
@@ -18,6 +19,7 @@ import {
 
 interface IOptionType {
 	optionType: string;
+	question: IQuestion;
 }
 
 const OptionList = (props: IOptionType) => {
