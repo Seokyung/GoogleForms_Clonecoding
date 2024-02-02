@@ -1,17 +1,16 @@
 import React, { useState } from "react";
 import { IOptionList } from "../../interfaces/IOptionList";
+import OptionListItem from "./OptionListItem";
 import { nanoid } from "nanoid";
 import styled from "styled-components";
 import {
 	Button,
-	IconButton,
 	List,
 	ListItem,
 	ListItemIcon,
 	ListItemText,
 	TextField,
 } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
 import {
 	CheckBoxOutlineBlank,
 	RadioButtonUnchecked,
@@ -46,7 +45,7 @@ const OptionList = (props: IOptionType) => {
 		return <ListItemIcon>{idx + 1}</ListItemIcon>;
 	};
 
-	const setOptionIcon = (idx: number) => {
+	const renderOptionIcon = (idx: number) => {
 		switch (props.optionType) {
 			case "radio":
 				return renderRadio();
@@ -108,25 +107,20 @@ const OptionList = (props: IOptionType) => {
 	};
 
 	const renderOptionList = () => {
-		return optionList.map((item: IOptionList, idx: number) => {
+		let newList: IOptionList[] = optionList;
+		if (isEtcAdded && props.optionType === "dropdown") {
+			newList = optionList.slice(0, optionList.length - 1);
+		}
+		return newList.map((item: IOptionList, idx: number) => {
 			return (
-				<ListItem
-					key={item.id}
-					secondaryAction={
-						optionList.length !== 1 && (
-							<IconButton edge="end" onClick={() => deleteOption(item.id)}>
-								<CloseIcon />
-							</IconButton>
-						)
-					}
-				>
-					{setOptionIcon(idx)}
-					<ListItemText
-						primary={
-							<TextField variant="standard" value={item.text} fullWidth />
-						}
-					/>
-				</ListItem>
+				<OptionListItem
+					key={idx}
+					item={item}
+					listIdx={idx}
+					optionList={optionList}
+					deleteOption={deleteOption}
+					renderOptionIcon={renderOptionIcon}
+				/>
 			);
 		});
 	};
@@ -136,7 +130,9 @@ const OptionList = (props: IOptionType) => {
 			<List>
 				{renderOptionList()}
 				<ListItem>
-					{setOptionIcon(optionList.length)}
+					{renderOptionIcon(
+						isEtcAdded ? optionList.length - 1 : optionList.length
+					)}
 					<ListItemText
 						primary={
 							<>
