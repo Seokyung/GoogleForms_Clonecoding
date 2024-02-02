@@ -1,91 +1,25 @@
-import React, { useState } from "react";
+import React from "react";
 import { IQuestionList } from "../../interfaces/IQuestionList";
-import {
-	FormControl,
-	FormControlLabel,
-	Radio,
-	RadioGroup,
-	TextField,
-} from "@mui/material";
-import { CheckBox } from "@mui/icons-material";
+import OptionText from "../Option/OptionText";
+import OptionList from "../Option/OptionList";
 
-interface IQuestionIdx {
+interface IQuestionContent {
 	question: IQuestionList;
 }
 
-const QuestionContent = (props: IQuestionIdx) => {
-	const [isPreview, setIsPreview] = useState<boolean>(true);
-	const [optionText, setOptionText] = useState<string>("옵션");
-
-	const onTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const { value } = e.target;
-		setOptionText(value);
-	};
-
+const QuestionContent = (props: IQuestionContent) => {
 	const renderOption = () => {
 		switch (props.question.optionId) {
 			case 0:
-				return (
-					<TextField
-						variant="standard"
-						placeholder="단답형 텍스트"
-						disabled={isPreview}
-						margin="dense"
-					/>
-				);
+				return <OptionText isLong={false} placeholderText="단답형 텍스트" />;
 			case 1:
-				return (
-					<TextField
-						variant="standard"
-						placeholder="장문형 텍스트"
-						disabled={isPreview}
-						multiline
-						margin="dense"
-					/>
-				);
+				return <OptionText isLong={true} placeholderText="장문형 텍스트" />;
 			case 2:
-				return (
-					<FormControl>
-						<RadioGroup>
-							<FormControlLabel
-								control={<Radio />}
-								label={
-									<TextField
-										variant="standard"
-										value={optionText}
-										onChange={onTextChange}
-										margin="normal"
-									/>
-								}
-							/>
-						</RadioGroup>
-					</FormControl>
-				);
+				return <OptionList optionType="radio" />;
 			case 3:
-				return (
-					<FormControl>
-						<FormControlLabel
-							control={<CheckBox />}
-							label={
-								<TextField
-									variant="standard"
-									value={optionText}
-									onChange={onTextChange}
-									margin="normal"
-								/>
-							}
-						/>
-					</FormControl>
-				);
+				return <OptionList optionType="checkbox" />;
 			case 4:
-				return (
-					<TextField
-						variant="standard"
-						value={optionText}
-						onChange={onTextChange}
-						margin="normal"
-					/>
-				);
+				return <OptionList optionType="dropdown" />;
 			default:
 				break;
 		}

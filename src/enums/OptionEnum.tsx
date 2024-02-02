@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 import {
 	CheckBoxOutlined,
 	ExpandCircleDownOutlined,
@@ -6,7 +7,14 @@ import {
 	Subject,
 } from "@mui/icons-material";
 
-export const OptionEnum = [
+export interface IOptionENUM {
+	oid: number;
+	name: string;
+	icon: ReactNode;
+	text: string;
+}
+
+export const OptionENUM = [
 	{
 		oid: 0,
 		name: "short",

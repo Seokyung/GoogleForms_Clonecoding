@@ -22,7 +22,6 @@ const SurveyForm = () => {
 				isRequired: false,
 			},
 		]);
-		console.log(questionList);
 	};
 
 	return (

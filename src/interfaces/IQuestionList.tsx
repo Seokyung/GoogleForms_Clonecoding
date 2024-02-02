@@ -1,7 +1,9 @@
+import { IOptionData } from "./IOptionData";
+
 export interface IQuestionList {
 	qid: string;
 	title: string;
 	optionId: number;
-	optionData?: object;
+	optionData?: IOptionData;
 	isRequired: boolean;
 }

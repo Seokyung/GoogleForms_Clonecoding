@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { OptionEnum } from "../../datas/OptionEnum";
+import { IOptionENUM, OptionENUM } from "../../enums/OptionEnum";
 import { IQuestionList } from "../../interfaces/IQuestionList";
 import { ArrowDropDownOutlined } from "@mui/icons-material";
 import {
@@ -55,7 +55,6 @@ const QuestionHeader = (props: IQHeader) => {
 		e: React.MouseEvent<HTMLElement>,
 		idx: number
 	) => {
-		// props.setOptionIdx(idx);
 		props.setQuestionList([
 			...props.questionList.slice(0, props.questionIdx),
 			{
@@ -89,10 +88,10 @@ const QuestionHeader = (props: IQHeader) => {
 				}}
 				variant="outlined"
 				onClick={openMenu}
-				startIcon={OptionEnum[props.question.optionId].icon}
+				startIcon={OptionENUM[props.question.optionId].icon}
 				endIcon={<ArrowDropDownOutlined />}
 			>
-				{OptionEnum[props.question.optionId].text}
+				{OptionENUM[props.question.optionId].text}
 			</Button>
 			<Menu
 				open={isOpened}
@@ -100,7 +99,7 @@ const QuestionHeader = (props: IQHeader) => {
 				anchorEl={anchorEl}
 				anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
 			>
-				{OptionEnum.slice(0, 2).map((item) => (
+				{OptionENUM.slice(0, 2).map((item: IOptionENUM) => (
 					<MenuItem
 						key={item.oid}
 						id={item.name}
@@ -111,7 +110,7 @@ const QuestionHeader = (props: IQHeader) => {
 					</MenuItem>
 				))}
 				<Divider />
-				{OptionEnum.slice(2).map((item) => (
+				{OptionENUM.slice(2).map((item: IOptionENUM) => (
 					<MenuItem
 						key={item.oid}
 						id={item.name}
