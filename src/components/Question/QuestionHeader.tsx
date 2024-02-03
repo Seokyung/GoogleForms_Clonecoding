@@ -18,11 +18,11 @@ import {
 	TextField,
 } from "@mui/material";
 
-interface IQHeader {
+interface IQuestionHeader {
 	questionIdx: number;
 }
 
-const QuestionHeader = (props: IQHeader) => {
+const QuestionHeader = (props: IQuestionHeader) => {
 	const question = useSelector(
 		(state: rootState) => state.questionReducer[props.questionIdx]
 	);

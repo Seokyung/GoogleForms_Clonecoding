@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { nanoid } from "nanoid";
-import { IQuestion } from "../../interfaces/IQuestion";
+import { useDispatch, useSelector } from "react-redux";
+import { rootState } from "../../modules/reducers";
+import { addEtc, addOption } from "../../modules/actions/question";
 import { IOptionList } from "../../interfaces/IOptionList";
 import OptionListItem from "./OptionListItem";
 import styled from "styled-components";
@@ -19,14 +20,21 @@ import {
 
 interface IOptionListProps {
 	optionType: string;
-	question: IQuestion;
-	// questionList: IQuestion[];
-	// setQuestionList: React.Dispatch<React.SetStateAction<IQuestion[]>>;
+	questionIdx: number;
 }
 
 const OptionList = (props: IOptionListProps) => {
+	const question = useSelector(
+		(state: rootState) => state.questionReducer[props.questionIdx]
+	);
+	const optionList2 = useSelector(
+		(state: rootState) =>
+			state.questionReducer[props.questionIdx].optionData.options
+	);
+	const dispatch = useDispatch();
+
 	const [optionList, setOptionList] = useState<IOptionList[]>(
-		props.question.optionData.options
+		question.optionData.options
 	);
 	const [optionIdx, setOptionIdx] = useState<number>(2);
 	const [isEtcAdded, setIsEtcAdded] = useState<boolean>(false);
@@ -62,51 +70,24 @@ const OptionList = (props: IOptionListProps) => {
 		}
 	};
 
-	const addOption = (e: React.MouseEvent) => {
-		let newOptionList: IOptionList[];
-		if (isEtcAdded) {
-			newOptionList = [
-				...optionList.slice(0, optionList.length - 1),
-				{
-					id: nanoid(),
-					text: `옵션 ${optionIdx}`,
-				},
-				optionList[optionList.length - 1],
-			];
-			setOptionList(newOptionList);
-		} else {
-			newOptionList = [
-				...optionList,
-				{
-					id: nanoid(),
-					text: `옵션 ${optionIdx}`,
-				},
-			];
-			setOptionList(newOptionList);
-		}
+	const onAddOption = (e: React.MouseEvent) => {
+		dispatch(addOption(props.questionIdx, question, optionIdx, isEtcAdded));
 		setOptionIdx((prev) => prev + 1);
 	};
 
-	const addEtc = (e: React.MouseEvent<HTMLButtonElement>) => {
+	const onAddEtc = (e: React.MouseEvent<HTMLButtonElement>) => {
 		if (!isEtcAdded) {
-			const newOptionList: IOptionList[] = [
-				...optionList,
-				{
-					id: nanoid(),
-					text: "기타...",
-				},
-			];
-			setOptionList(newOptionList);
+			dispatch(addEtc(props.questionIdx, question, isEtcAdded));
 			setIsEtcAdded(true);
 		}
 	};
 
-	const deleteOption = (deleteId: string) => {
-		if (optionList.length !== 1) {
-			if (isEtcAdded && optionList[optionList.length - 1].id === deleteId) {
+	const onDeleteOption = (deleteId: string) => {
+		if (optionList2.length !== 1) {
+			if (isEtcAdded && optionList2[optionList2.length - 1].id === deleteId) {
 				setIsEtcAdded((prev) => !prev);
 			}
-			const newOptionList: IOptionList[] = optionList.filter((el) => {
+			const newOptionList: IOptionList[] = optionList2.filter((el) => {
 				return el.id !== deleteId;
 			});
 			setOptionList(newOptionList);
@@ -114,18 +95,18 @@ const OptionList = (props: IOptionListProps) => {
 	};
 
 	const renderOptionList = () => {
-		let newList: IOptionList[] = optionList;
+		let newList: IOptionList[] = optionList2;
 		if (isEtcAdded && props.optionType === "dropdown") {
-			newList = optionList.slice(0, optionList.length - 1);
+			newList = optionList2.slice(0, optionList2.length - 1);
 		}
 		return newList.map((item: IOptionList, idx: number) => {
 			return (
 				<OptionListItem
 					key={idx}
-					item={item}
+					option={item}
 					listIdx={idx}
-					optionList={optionList}
-					deleteOption={deleteOption}
+					optionList={optionList2}
+					deleteOption={onDeleteOption}
 					renderOptionIcon={renderOptionIcon}
 				/>
 			);
@@ -147,12 +128,12 @@ const OptionList = (props: IOptionListProps) => {
 									variant="standard"
 									placeholder="옵션 추가"
 									sx={{ width: "70px" }}
-									onClick={addOption}
+									onClick={onAddOption}
 								/>
 								{!isEtcAdded && (
 									<>
 										또는
-										<Button size="small" onClick={addEtc}>
+										<Button size="small" onClick={onAddEtc}>
 											'기타' 추가
 										</Button>
 									</>

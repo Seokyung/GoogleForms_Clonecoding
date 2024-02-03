@@ -29,7 +29,7 @@ const QuestionForm = (props: IQuestionForm) => {
 	return (
 		<SurveyBox>
 			<QuestionHeader questionIdx={props.questionIdx} />
-			<QuestionContent question={question} />
+			<QuestionContent questionIdx={props.questionIdx} />
 			<Divider sx={{ margin: "1rem 0" }} />
 			<QuestionFooter onCopy={onCopyQuestion} onDelete={onDeleteQuestion} />
 		</SurveyBox>

@@ -1,10 +1,10 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useState } from "react";
 import { IconButton, ListItem, ListItemText, TextField } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { IOptionList } from "../../interfaces/IOptionList";
 
 interface IOptionListItem {
-	item: IOptionList;
+	option: IOptionList;
 	listIdx: number;
 	optionList: IOptionList[];
 	deleteOption: (id: string) => void;
@@ -12,13 +12,20 @@ interface IOptionListItem {
 }
 
 const OptionListItem = (props: IOptionListItem) => {
+	const [optionText, setOptionText] = useState<string>(props.option.text);
+
+	const onTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const { value } = e.target;
+		setOptionText(value);
+	};
+
 	return (
 		<ListItem
 			secondaryAction={
 				props.optionList.length !== 1 && (
 					<IconButton
 						edge="end"
-						onClick={() => props.deleteOption(props.item.id)}
+						onClick={() => props.deleteOption(props.option.id)}
 					>
 						<CloseIcon />
 					</IconButton>
@@ -28,7 +35,12 @@ const OptionListItem = (props: IOptionListItem) => {
 			{props.renderOptionIcon(props.listIdx)}
 			<ListItemText
 				primary={
-					<TextField variant="standard" value={props.item.text} fullWidth />
+					<TextField
+						variant="standard"
+						value={optionText}
+						onChange={onTextChange}
+						fullWidth
+					/>
 				}
 			/>
 		</ListItem>

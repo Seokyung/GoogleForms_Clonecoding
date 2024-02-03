@@ -1,5 +1,6 @@
 import { nanoid } from "nanoid";
 import { IQuestion } from "../../interfaces/IQuestion";
+import { IOptionData } from "../../interfaces/IOptionData";
 
 export const ADD_QUESTION = "question/ADD_QUESTION" as const;
 export const COPY_QUESTION = "question/COPY_QUESTION" as const;
@@ -8,6 +9,13 @@ export const DELETE_QUESTION = "question/DELETE_QUESTION" as const;
 export const CHANGE_QUESTION_TITLE = "question/CHANGE_QUESTION_TITLE" as const;
 export const CHANGE_QUESTION_OPTION =
 	"question/CHANGE_QUESTION_OPTION" as const;
+
+export const ADD_OPTION = "question/ADD_OPTION" as const;
+export const ADD_ETC = "question/ADD_ETC" as const;
+export const UPDATE_OPTION = "question/UPDATE_OPTION" as const;
+export const DELETE_OPTION = "question/DELETE_OPTION" as const;
+
+export const UPDATE_OPTION_DATA = "question/UPDATE_OPTION_DATA" as const;
 
 export const addQuestion = () => ({
 	type: ADD_QUESTION,
@@ -57,5 +65,56 @@ export const changeQuestionOption = (
 		idx: questionIdx,
 		question: question,
 		optionId: changedOptionId,
+	},
+});
+
+export const addOption = (
+	questionIdx: number,
+	question: IQuestion,
+	optionIdx: number,
+	isEtcAdded: boolean
+) => ({
+	type: ADD_OPTION,
+	payload: {
+		questionIdx: questionIdx,
+		question: question,
+		optionIdx: optionIdx,
+		isEtcAdded: isEtcAdded,
+	},
+});
+
+export const addEtc = (
+	questionIdx: number,
+	question: IQuestion,
+	isEtcAdded: boolean
+) => ({
+	type: ADD_ETC,
+	payload: {
+		questionIdx: questionIdx,
+		question: question,
+		isEtcAdded: isEtcAdded,
+	},
+});
+
+export const updateOption = () => ({
+	type: UPDATE_OPTION,
+	payload: {},
+});
+
+export const deleteOption = () => ({
+	type: DELETE_OPTION,
+	payload: {},
+});
+
+export const updateOptionData = (
+	questionIdx: number,
+	question: IQuestion,
+	optionData: IOptionData
+) => ({
+	type: UPDATE_OPTION_DATA,
+	payload: {
+		idx: questionIdx,
+		question: question,
+		optionData: optionData,
 	},
 });
