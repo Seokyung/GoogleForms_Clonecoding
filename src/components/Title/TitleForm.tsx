@@ -1,20 +1,32 @@
-import { TextField } from "@mui/material";
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { rootState } from "../../modules/reducers";
+import { changeDescription, changeTitle } from "../../modules/actions/title";
+import { TextField } from "@mui/material";
 import { SurveyBox } from "../../styles/SurveyBox";
 import styled from "styled-components";
 
-interface IForm {
-	title: string;
-	description: string;
-}
+const TitleForm = () => {
+	const titleObj = useSelector((state: rootState) => state.titleReducer);
+	const dispatch = useDispatch();
 
-const TitleForm = (formObj: IForm) => {
-	const [title, setTitle] = useState<string>(formObj.title);
-	const [description, setDescription] = useState<string>(formObj.description);
+	const [title, setTitle] = useState<string>(titleObj.title);
+	const [description, setDescription] = useState<string>(titleObj.description);
 
 	const onTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { value, id } = e.target;
-		id === "title" ? setTitle(value) : setDescription(value);
+		if (id === "title") {
+			if (value === "") {
+				setTitle("제목 없는 설문지");
+				dispatch(changeTitle("제목 없는 설문지"));
+				return;
+			}
+			setTitle(value);
+			dispatch(changeTitle(value));
+		} else {
+			setDescription(value);
+			dispatch(changeDescription(value));
+		}
 	};
 
 	return (
@@ -37,11 +49,6 @@ const TitleForm = (formObj: IForm) => {
 			/>
 		</SurveyBox>
 	);
-};
-
-TitleForm.defaultProps = {
-	title: "제목 없는 설문지",
-	description: "",
 };
 
 const StyledTextField = styled(TextField)(({ id }) => ({

@@ -16,8 +16,6 @@ import styled from "styled-components";
 interface IQHeader {
 	question: IQuestion;
 	questionIdx: number;
-	// questionList: IQuestion[];
-	// setQuestionList: React.Dispatch<React.SetStateAction<IQuestion[]>>;
 }
 
 const QuestionHeader = (props: IQHeader) => {
