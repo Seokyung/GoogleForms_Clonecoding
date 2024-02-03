@@ -16,8 +16,8 @@ import styled from "styled-components";
 interface IQHeader {
 	question: IQuestion;
 	questionIdx: number;
-	questionList: IQuestion[];
-	setQuestionList: React.Dispatch<React.SetStateAction<IQuestion[]>>;
+	// questionList: IQuestion[];
+	// setQuestionList: React.Dispatch<React.SetStateAction<IQuestion[]>>;
 }
 
 const QuestionHeader = (props: IQHeader) => {
@@ -30,17 +30,17 @@ const QuestionHeader = (props: IQHeader) => {
 	const onTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { value } = e.target;
 		setQuestionTitle(value);
-		props.setQuestionList([
-			...props.questionList.slice(0, props.questionIdx),
-			{
-				...props.question,
-				title: value,
-			},
-			...props.questionList.slice(
-				props.questionIdx + 1,
-				props.questionList.length
-			),
-		]);
+		// props.setQuestionList([
+		// 	...props.questionList.slice(0, props.questionIdx),
+		// 	{
+		// 		...props.question,
+		// 		title: value,
+		// 	},
+		// 	...props.questionList.slice(
+		// 		props.questionIdx + 1,
+		// 		props.questionList.length
+		// 	),
+		// ]);
 	};
 
 	const openMenu = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -55,17 +55,17 @@ const QuestionHeader = (props: IQHeader) => {
 		e: React.MouseEvent<HTMLElement>,
 		idx: number
 	) => {
-		props.setQuestionList([
-			...props.questionList.slice(0, props.questionIdx),
-			{
-				...props.question,
-				optionId: idx,
-			},
-			...props.questionList.slice(
-				props.questionIdx + 1,
-				props.questionList.length
-			),
-		]);
+		// props.setQuestionList([
+		// 	...props.questionList.slice(0, props.questionIdx),
+		// 	{
+		// 		...props.question,
+		// 		optionId: idx,
+		// 	},
+		// 	...props.questionList.slice(
+		// 		props.questionIdx + 1,
+		// 		props.questionList.length
+		// 	),
+		// ]);
 		setAnchorEl(null);
 	};
 

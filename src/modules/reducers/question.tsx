@@ -29,10 +29,10 @@ const initialState: QuestionState = [
 	},
 ];
 
-const questionReducer = (
+function questionReducer(
 	state: QuestionState = initialState,
 	action: QuestionAction
-) => {
+): IQuestion[] {
 	switch (action.type) {
 		case ADD_QUESTION:
 			return [
@@ -49,12 +49,21 @@ const questionReducer = (
 				},
 			];
 		case COPY_QUESTION:
-			return state;
+			const prevQuestionList = state.slice(0, action.payload.idx + 1);
+			const nextQuestionList = state.slice(action.payload.idx + 1);
+			return [
+				...prevQuestionList,
+				{
+					...action.payload.question,
+					qid: nanoid(),
+				},
+				...nextQuestionList,
+			];
 		case DELETE_QUESTION:
 			return state;
 		default:
 			return state;
 	}
-};
+}
 
 export default questionReducer;

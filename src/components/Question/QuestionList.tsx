@@ -1,25 +1,17 @@
 import React from "react";
+import { useSelector } from "react-redux";
+import { rootState } from "../../modules/reducers";
 import QuestionForm from "./QuestionForm";
-import { IQuestion } from "../../interfaces/IQuestion";
 import styled from "styled-components";
 
-interface IQList {
-	questionList: IQuestion[];
-	setQuestionList: React.Dispatch<React.SetStateAction<IQuestion[]>>;
-}
+const QuestionList = () => {
+	const questionList = useSelector((state: rootState) => state.questionReducer);
 
-const QuestionList = (props: IQList) => {
 	return (
 		<Container>
-			{props.questionList.map((item, idx) => {
+			{questionList.map((item, idx) => {
 				return (
-					<QuestionForm
-						key={item.qid}
-						question={item}
-						questionIdx={idx}
-						questionList={props.questionList}
-						setQuestionList={props.setQuestionList}
-					/>
+					<QuestionForm key={item.qid} question={item} questionIdx={idx} />
 				);
 			})}
 		</Container>

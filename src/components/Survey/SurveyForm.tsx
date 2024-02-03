@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { rootState } from "../../modules/reducers";
 import { addQuestion } from "../../modules/actions/question";
-import { IQuestion } from "../../interfaces/IQuestion";
 import TitleForm from "../Title/TitleForm";
 import QuestionList from "../Question/QuestionList";
 import styled from "styled-components";
@@ -10,22 +9,15 @@ import { Button } from "@mui/material";
 import { AddCircleOutlineOutlined } from "@mui/icons-material";
 
 const SurveyForm = () => {
-	const questionList2 = useSelector((state: rootState) => {
-		return state.questionReducer;
-	});
+	const questionList = useSelector((state: rootState) => state.questionReducer);
 	const dispatch = useDispatch();
-
-	const [questionList, setQuestionList] =
-		useState<Array<IQuestion>>(questionList2);
 
 	const onAddQuestion = () => {
 		dispatch(addQuestion());
-		setQuestionList(questionList2);
-		console.log(questionList2);
 	};
 
 	const onTest = (e: React.MouseEvent<HTMLButtonElement>) => {
-		console.log(questionList2);
+		console.log(questionList);
 	};
 
 	return (
@@ -35,10 +27,7 @@ const SurveyForm = () => {
 			</Button>
 			<Button onClick={onTest}>TEST</Button>
 			<TitleForm />
-			<QuestionList
-				questionList={questionList}
-				setQuestionList={setQuestionList}
-			/>
+			<QuestionList />
 		</Container>
 	);
 };

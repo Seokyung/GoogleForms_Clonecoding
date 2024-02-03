@@ -20,8 +20,8 @@ import {
 interface IOptionListProps {
 	optionType: string;
 	question: IQuestion;
-	questionList: IQuestion[];
-	setQuestionList: React.Dispatch<React.SetStateAction<IQuestion[]>>;
+	// questionList: IQuestion[];
+	// setQuestionList: React.Dispatch<React.SetStateAction<IQuestion[]>>;
 }
 
 const OptionList = (props: IOptionListProps) => {
