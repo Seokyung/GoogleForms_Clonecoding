@@ -9,8 +9,8 @@ import {
 	COPY_QUESTION,
 	DELETE_OPTION,
 	DELETE_QUESTION,
-	UPDATE_OPTION,
-	UPDATE_OPTION_DATA,
+	TOGGLE_ETC,
+	CHANGE_OPTION_TEXT,
 	addEtc,
 	addOption,
 	addQuestion,
@@ -19,8 +19,8 @@ import {
 	copyQuestion,
 	deleteOption,
 	deleteQuestion,
+	toggleEtc,
 	updateOption,
-	updateOptionData,
 } from "../actions/question";
 import { IOptionList } from "../../interfaces/IOptionList";
 
@@ -30,11 +30,11 @@ type QuestionAction =
 	| ReturnType<typeof deleteQuestion>
 	| ReturnType<typeof changeQuestionTitle>
 	| ReturnType<typeof changeQuestionOption>
-	| ReturnType<typeof updateOptionData>
 	| ReturnType<typeof addOption>
 	| ReturnType<typeof addEtc>
 	| ReturnType<typeof updateOption>
-	| ReturnType<typeof deleteOption>;
+	| ReturnType<typeof deleteOption>
+	| ReturnType<typeof toggleEtc>;
 
 export type QuestionState = IQuestion[];
 
@@ -113,15 +113,10 @@ function questionReducer(
 			const addOption_nextQuestionList = state.slice(
 				action.payload.questionIdx + 1
 			);
-			const addOption_prevOptionList =
-				action.payload.question.optionData.options.slice(
-					0,
-					action.payload.question.optionData.options.length - 1
-				);
-			const addOption_nextOptionList =
-				action.payload.question.optionData.options[
-					action.payload.question.optionData.options.length - 1
-				];
+			const addOption_prevOptionList = action.payload.optionList.slice(
+				0,
+				action.payload.optionList.length - 1
+			);
 			let addOption_newOptionList: IOptionList[];
 			if (action.payload.isEtcAdded) {
 				addOption_newOptionList = [
@@ -130,11 +125,11 @@ function questionReducer(
 						id: nanoid(),
 						text: `옵션 ${action.payload.optionIdx}`,
 					},
-					addOption_nextOptionList,
+					action.payload.optionList[action.payload.optionList.length - 1],
 				];
 			} else {
 				addOption_newOptionList = [
-					...action.payload.question.optionData.options,
+					...action.payload.optionList,
 					{
 						id: nanoid(),
 						text: `옵션 ${action.payload.optionIdx}`,
@@ -152,6 +147,10 @@ function questionReducer(
 				},
 				...addOption_nextQuestionList,
 			];
+		case CHANGE_OPTION_TEXT:
+			return state;
+		case DELETE_OPTION:
+			return state;
 		case ADD_ETC:
 			const addEtc_prevQuestionList = state.slice(
 				0,
@@ -160,8 +159,8 @@ function questionReducer(
 			const addEtc_nextQuestionList = state.slice(
 				action.payload.questionIdx + 1
 			);
-			let addEtc_newOptionList = [
-				...action.payload.question.optionData.options,
+			const addEtc_newOptionList = [
+				...action.payload.optionList,
 				{
 					id: nanoid(),
 					text: "기타...",
@@ -173,27 +172,29 @@ function questionReducer(
 					...action.payload.question,
 					optionData: {
 						options: addEtc_newOptionList,
-						isEtcAdded: action.payload.isEtcAdded,
+						isEtcAdded: true,
 					},
 				},
 				...addEtc_nextQuestionList,
 			];
-		case UPDATE_OPTION:
-			return state;
-		case DELETE_OPTION:
-			return state;
-		case UPDATE_OPTION_DATA:
-			const updateOptions_prevQuestionList = state.slice(0, action.payload.idx);
-			const updateOptions_nextQuestionList = state.slice(
-				action.payload.idx + 1
+		case TOGGLE_ETC:
+			const toggleEtc_prevQuestionList = state.slice(
+				0,
+				action.payload.questionIdx
+			);
+			const toggleEtc_nextQuestionList = state.slice(
+				action.payload.questionIdx + 1
 			);
 			return [
-				...updateOptions_prevQuestionList,
+				...toggleEtc_prevQuestionList,
 				{
 					...action.payload.question,
-					optionData: action.payload.optionData,
+					optionData: {
+						options: action.payload.optionList,
+						isEtcAdded: action.payload.isEtcAdded,
+					},
 				},
-				...updateOptions_nextQuestionList,
+				...toggleEtc_nextQuestionList,
 			];
 		default:
 			return state;

@@ -27,17 +27,13 @@ const OptionList = (props: IOptionListProps) => {
 	const question = useSelector(
 		(state: rootState) => state.questionReducer[props.questionIdx]
 	);
-	const optionList2 = useSelector(
-		(state: rootState) =>
-			state.questionReducer[props.questionIdx].optionData.options
+	const optionData = useSelector(
+		(state: rootState) => state.questionReducer[props.questionIdx].optionData
 	);
 	const dispatch = useDispatch();
 
-	const [optionList, setOptionList] = useState<IOptionList[]>(
-		question.optionData.options
-	);
-	const [optionIdx, setOptionIdx] = useState<number>(2);
-	const [isEtcAdded, setIsEtcAdded] = useState<boolean>(false);
+	const [optionIdx, setOptionIdx] = useState<number>(optionData.options.length);
+	const [isEtcAdded, setIsEtcAdded] = useState<boolean>(optionData.isEtcAdded);
 
 	const renderRadio = () => {
 		return (
@@ -71,41 +67,45 @@ const OptionList = (props: IOptionListProps) => {
 	};
 
 	const onAddOption = (e: React.MouseEvent) => {
-		dispatch(addOption(props.questionIdx, question, optionIdx, isEtcAdded));
+		dispatch(addOption(props.questionIdx, question, optionIdx + 1));
 		setOptionIdx((prev) => prev + 1);
 	};
 
 	const onAddEtc = (e: React.MouseEvent<HTMLButtonElement>) => {
-		if (!isEtcAdded) {
-			dispatch(addEtc(props.questionIdx, question, isEtcAdded));
+		if (isEtcAdded === false) {
+			dispatch(addEtc(props.questionIdx, question));
 			setIsEtcAdded(true);
 		}
 	};
 
 	const onDeleteOption = (deleteId: string) => {
-		if (optionList2.length !== 1) {
-			if (isEtcAdded && optionList2[optionList2.length - 1].id === deleteId) {
+		if (optionData.options.length !== 1) {
+			if (
+				isEtcAdded === true &&
+				optionData.options[optionData.options.length - 1].id === deleteId
+			) {
 				setIsEtcAdded((prev) => !prev);
 			}
-			const newOptionList: IOptionList[] = optionList2.filter((el) => {
-				return el.id !== deleteId;
-			});
-			setOptionList(newOptionList);
+			// const newOptionList: IOptionList[] = optionData.options.filter((el) => {
+			// 	return el.id !== deleteId;
+			// });
+			// setOptionList(newOptionList);
 		}
 	};
 
 	const renderOptionList = () => {
-		let newList: IOptionList[] = optionList2;
-		if (isEtcAdded && props.optionType === "dropdown") {
-			newList = optionList2.slice(0, optionList2.length - 1);
+		let newList: IOptionList[] = optionData.options;
+		if (isEtcAdded === true && props.optionType === "dropdown") {
+			newList = optionData.options.slice(0, optionData.options.length - 1);
 		}
+		console.log(newList);
 		return newList.map((item: IOptionList, idx: number) => {
 			return (
 				<OptionListItem
 					key={idx}
+					questionIdx={props.questionIdx}
 					option={item}
-					listIdx={idx}
-					optionList={optionList2}
+					listItemIdx={idx}
 					deleteOption={onDeleteOption}
 					renderOptionIcon={renderOptionIcon}
 				/>
@@ -119,7 +119,9 @@ const OptionList = (props: IOptionListProps) => {
 				{renderOptionList()}
 				<ListItem>
 					{renderOptionIcon(
-						isEtcAdded ? optionList.length - 1 : optionList.length
+						isEtcAdded
+							? optionData.options.length - 1
+							: optionData.options.length
 					)}
 					<ListItemText
 						primary={
@@ -130,7 +132,7 @@ const OptionList = (props: IOptionListProps) => {
 									sx={{ width: "70px" }}
 									onClick={onAddOption}
 								/>
-								{!isEtcAdded && (
+								{isEtcAdded === false && props.optionType !== "dropdown" && (
 									<>
 										또는
 										<Button size="small" onClick={onAddEtc}>
