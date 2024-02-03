@@ -1,13 +1,12 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { copyQuestion, deleteQuestion } from "../../modules/actions/question";
 import QuestionHeader from "./QuestionHeader";
 import QuestionContent from "./QuestionContent";
 import QuestionFooter from "./QuestionFooter";
 import { IQuestion } from "../../interfaces/IQuestion";
 import { SurveyBox } from "../../styles/SurveyBox";
 import { Divider } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
-import { rootState } from "../../modules/reducers";
-import { copyQuestion } from "../../modules/actions/question";
 
 interface IQForm {
 	question: IQuestion;
@@ -15,14 +14,11 @@ interface IQForm {
 }
 
 const QuestionForm = (props: IQForm) => {
-	const questionList = useSelector((state: rootState) => state.questionReducer);
 	const dispatch = useDispatch();
 
 	const onDeleteQuestion = () => {
-		// props.setQuestionList(
-		// 	questionList.filter((el) => el.qid !== props.question.qid)
-		// );
-		console.log("delete question");
+		dispatch(deleteQuestion(props.question.qid));
+		console.log("deleted question id: " + props.question.qid);
 	};
 
 	const onCopyQuestion = () => {

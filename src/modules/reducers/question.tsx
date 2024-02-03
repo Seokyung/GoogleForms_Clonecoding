@@ -60,7 +60,7 @@ function questionReducer(
 				...nextQuestionList,
 			];
 		case DELETE_QUESTION:
-			return state;
+			return state.filter((el) => el.qid !== action.payload.id);
 		default:
 			return state;
 	}

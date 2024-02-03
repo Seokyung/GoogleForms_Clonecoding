@@ -23,7 +23,9 @@ export const copyQuestion = (
 	},
 });
 
-export const deleteQuestion = () => ({
+export const deleteQuestion = (deletedId: string) => ({
 	type: DELETE_QUESTION,
-	payload: {},
+	payload: {
+		id: deletedId,
+	},
 });
