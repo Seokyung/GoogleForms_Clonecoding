@@ -10,9 +10,7 @@ const QuestionList = () => {
 	return (
 		<Container>
 			{questionList.map((item, idx) => {
-				return (
-					<QuestionForm key={item.qid} question={item} questionIdx={idx} />
-				);
+				return <QuestionForm key={item.qid} questionIdx={idx} />;
 			})}
 		</Container>
 	);

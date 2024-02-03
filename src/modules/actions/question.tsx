@@ -5,6 +5,10 @@ export const ADD_QUESTION = "question/ADD_QUESTION" as const;
 export const COPY_QUESTION = "question/COPY_QUESTION" as const;
 export const DELETE_QUESTION = "question/DELETE_QUESTION" as const;
 
+export const CHANGE_QUESTION_TITLE = "question/CHANGE_QUESTION_TITLE" as const;
+export const CHANGE_QUESTION_OPTION =
+	"question/CHANGE_QUESTION_OPTION" as const;
+
 export const addQuestion = () => ({
 	type: ADD_QUESTION,
 	payload: {
@@ -27,5 +31,31 @@ export const deleteQuestion = (deletedId: string) => ({
 	type: DELETE_QUESTION,
 	payload: {
 		id: deletedId,
+	},
+});
+
+export const changeQuestionTitle = (
+	questionIdx: number,
+	question: IQuestion,
+	changedTitle: string
+) => ({
+	type: CHANGE_QUESTION_TITLE,
+	payload: {
+		idx: questionIdx,
+		question: question,
+		title: changedTitle,
+	},
+});
+
+export const changeQuestionOption = (
+	questionIdx: number,
+	question: IQuestion,
+	changedOptionId: number
+) => ({
+	type: CHANGE_QUESTION_OPTION,
+	payload: {
+		idx: questionIdx,
+		question: question,
+		optionId: changedOptionId,
 	},
 });

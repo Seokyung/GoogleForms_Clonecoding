@@ -1,38 +1,35 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { rootState } from "../../modules/reducers";
 import { copyQuestion, deleteQuestion } from "../../modules/actions/question";
 import QuestionHeader from "./QuestionHeader";
 import QuestionContent from "./QuestionContent";
 import QuestionFooter from "./QuestionFooter";
-import { IQuestion } from "../../interfaces/IQuestion";
 import { SurveyBox } from "../../styles/SurveyBox";
 import { Divider } from "@mui/material";
 
-interface IQForm {
-	question: IQuestion;
+interface IQuestionForm {
 	questionIdx: number;
 }
 
-const QuestionForm = (props: IQForm) => {
+const QuestionForm = (props: IQuestionForm) => {
+	const question = useSelector(
+		(state: rootState) => state.questionReducer[props.questionIdx]
+	);
 	const dispatch = useDispatch();
 
 	const onDeleteQuestion = () => {
-		dispatch(deleteQuestion(props.question.qid));
-		console.log("deleted question id: " + props.question.qid);
+		dispatch(deleteQuestion(question.qid));
 	};
 
 	const onCopyQuestion = () => {
-		dispatch(copyQuestion(props.questionIdx, props.question));
-		console.log("copied question id: " + props.questionIdx);
+		dispatch(copyQuestion(props.questionIdx, question));
 	};
 
 	return (
 		<SurveyBox>
-			<QuestionHeader
-				question={props.question}
-				questionIdx={props.questionIdx}
-			/>
-			<QuestionContent question={props.question} />
+			<QuestionHeader questionIdx={props.questionIdx} />
+			<QuestionContent question={question} />
 			<Divider sx={{ margin: "1rem 0" }} />
 			<QuestionFooter onCopy={onCopyQuestion} onDelete={onDeleteQuestion} />
 		</SurveyBox>

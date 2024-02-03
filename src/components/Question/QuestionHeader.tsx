@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 import { IOptionENUM, OptionENUM } from "../../enums/OptionEnum";
-import { IQuestion } from "../../interfaces/IQuestion";
+import { useDispatch, useSelector } from "react-redux";
+import { rootState } from "../../modules/reducers";
+import {
+	changeQuestionOption,
+	changeQuestionTitle,
+} from "../../modules/actions/question";
+import styled from "styled-components";
 import { ArrowDropDownOutlined } from "@mui/icons-material";
 import {
 	Button,
@@ -11,41 +17,32 @@ import {
 	MenuItem,
 	TextField,
 } from "@mui/material";
-import styled from "styled-components";
 
 interface IQHeader {
-	question: IQuestion;
 	questionIdx: number;
 }
 
 const QuestionHeader = (props: IQHeader) => {
-	const [questionTitle, setQuestionTitle] = useState<string>(
-		props.question.title
+	const question = useSelector(
+		(state: rootState) => state.questionReducer[props.questionIdx]
 	);
+	const dispatch = useDispatch();
+
+	const [questionTitle, setQuestionTitle] = useState<string>(question.title);
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const isOpened = Boolean(anchorEl);
 
 	const onTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { value } = e.target;
 		setQuestionTitle(value);
-		// props.setQuestionList([
-		// 	...props.questionList.slice(0, props.questionIdx),
-		// 	{
-		// 		...props.question,
-		// 		title: value,
-		// 	},
-		// 	...props.questionList.slice(
-		// 		props.questionIdx + 1,
-		// 		props.questionList.length
-		// 	),
-		// ]);
+		dispatch(changeQuestionTitle(props.questionIdx, question, value));
 	};
 
-	const openMenu = (e: React.MouseEvent<HTMLButtonElement>) => {
+	const openOptionMenu = (e: React.MouseEvent<HTMLButtonElement>) => {
 		setAnchorEl(e.currentTarget);
 	};
 
-	const closeMenu = () => {
+	const closeOptionMenu = () => {
 		setAnchorEl(null);
 	};
 
@@ -53,17 +50,7 @@ const QuestionHeader = (props: IQHeader) => {
 		e: React.MouseEvent<HTMLElement>,
 		idx: number
 	) => {
-		// props.setQuestionList([
-		// 	...props.questionList.slice(0, props.questionIdx),
-		// 	{
-		// 		...props.question,
-		// 		optionId: idx,
-		// 	},
-		// 	...props.questionList.slice(
-		// 		props.questionIdx + 1,
-		// 		props.questionList.length
-		// 	),
-		// ]);
+		dispatch(changeQuestionOption(props.questionIdx, question, idx));
 		setAnchorEl(null);
 	};
 
@@ -85,15 +72,15 @@ const QuestionHeader = (props: IQHeader) => {
 					minHeight: "48px",
 				}}
 				variant="outlined"
-				onClick={openMenu}
-				startIcon={OptionENUM[props.question.optionId].icon}
+				onClick={openOptionMenu}
+				startIcon={OptionENUM[question.optionId].icon}
 				endIcon={<ArrowDropDownOutlined />}
 			>
-				{OptionENUM[props.question.optionId].text}
+				{OptionENUM[question.optionId].text}
 			</Button>
 			<Menu
 				open={isOpened}
-				onClose={closeMenu}
+				onClose={closeOptionMenu}
 				anchorEl={anchorEl}
 				anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
 			>
