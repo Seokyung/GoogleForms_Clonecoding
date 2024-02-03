@@ -1,3 +1,4 @@
+import { nanoid } from "nanoid";
 import { IQuestion } from "../../interfaces/IQuestion";
 import {
 	ADD_QUESTION,
@@ -13,24 +14,47 @@ type QuestionAction =
 	| ReturnType<typeof copyQuestion>
 	| ReturnType<typeof deleteQuestion>;
 
-type QuestionState = { questionList: IQuestion[] };
+export type QuestionState = IQuestion[];
 
-const initialState: QuestionState = { questionList: [] };
+const initialState: QuestionState = [
+	{
+		qid: nanoid(),
+		title: "",
+		optionId: 2,
+		optionData: {
+			options: [{ id: nanoid(), text: "옵션 추가" }],
+			isEtcAdded: false,
+		},
+		isRequired: false,
+	},
+];
 
-function questionReducer(
+const questionReducer = (
 	state: QuestionState = initialState,
 	action: QuestionAction
-) {
+) => {
 	switch (action.type) {
 		case ADD_QUESTION:
-			return {};
+			return [
+				...state,
+				{
+					qid: action.payload.id,
+					title: "",
+					optionId: 2,
+					optionData: {
+						options: [{ id: nanoid(), text: "옵션 추가" }],
+						isEtcAdded: false,
+					},
+					isRequired: false,
+				},
+			];
 		case COPY_QUESTION:
-			return {};
+			return state;
 		case DELETE_QUESTION:
-			return {};
+			return state;
 		default:
 			return state;
 	}
-}
+};
 
 export default questionReducer;

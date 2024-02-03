@@ -11,7 +11,6 @@ const root = ReactDOM.createRoot(
 );
 
 const store = createStore(rootReducer);
-console.log(store.getState());
 
 root.render(
 	<Provider store={store}>

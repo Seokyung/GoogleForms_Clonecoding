@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import { nanoid } from "nanoid";
+import { useDispatch, useSelector } from "react-redux";
+import { rootState } from "../../modules/reducers";
+import { addQuestion } from "../../modules/actions/question";
 import { IQuestion } from "../../interfaces/IQuestion";
 import TitleForm from "../Title/TitleForm";
 import QuestionList from "../Question/QuestionList";
@@ -8,42 +10,27 @@ import { Button } from "@mui/material";
 import { AddCircleOutlineOutlined } from "@mui/icons-material";
 
 const SurveyForm = () => {
-	const [questionList, setQuestionList] = useState<Array<IQuestion>>([
-		{
-			qid: nanoid(),
-			title: "",
-			optionId: 2,
-			optionData: {
-				options: [{ id: nanoid(), text: "옵션 추가" }],
-				isEtcAdded: false,
-			},
-			isRequired: false,
-		},
-	]);
+	const questionList2 = useSelector((state: rootState) => {
+		return state.questionReducer;
+	});
+	const dispatch = useDispatch();
 
-	const addQuestion = (e: React.MouseEvent<HTMLButtonElement>) => {
-		setQuestionList((questionList) => [
-			...questionList,
-			{
-				qid: nanoid(),
-				title: "",
-				optionId: 2,
-				optionData: {
-					options: [{ id: nanoid(), text: "옵션 추가" }],
-					isEtcAdded: false,
-				},
-				isRequired: false,
-			},
-		]);
+	const [questionList, setQuestionList] =
+		useState<Array<IQuestion>>(questionList2);
+
+	const onAddQuestion = () => {
+		dispatch(addQuestion());
+		setQuestionList(questionList2);
+		console.log(questionList2);
 	};
 
 	const onTest = (e: React.MouseEvent<HTMLButtonElement>) => {
-		console.log(questionList);
+		console.log(questionList2);
 	};
 
 	return (
 		<Container>
-			<Button onClick={addQuestion}>
+			<Button onClick={onAddQuestion}>
 				<AddCircleOutlineOutlined />
 			</Button>
 			<Button onClick={onTest}>TEST</Button>
