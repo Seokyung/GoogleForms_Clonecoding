@@ -2,7 +2,6 @@ import { nanoid } from "nanoid";
 import { IOptionData } from "../../interfaces/IOptionData";
 import {
 	DELETE_OPTION,
-	addEtc,
 	deleteEtc,
 	deleteOption,
 	updateOption,
@@ -12,7 +11,6 @@ import { IOptionList } from "../../interfaces/IOptionList";
 type OptionAction =
 	| ReturnType<typeof deleteOption>
 	| ReturnType<typeof updateOption>
-	| ReturnType<typeof addEtc>
 	| ReturnType<typeof deleteEtc>;
 
 export type OptionState = IOptionData[];
@@ -35,36 +33,6 @@ function optionReducer(
 	action: OptionAction
 ): IOptionData[] {
 	switch (action.type) {
-		// case ADD_OPTION:
-		// 	const addOption_prevOptionList = state[
-		// 		action.payload.questionIdx
-		// 	].options.slice(0, action.payload.options.length - 1);
-		// 	let addOption_newOptionList: IOptionList[];
-		// 	if (action.payload.isEtcAdded) {
-		// 		addOption_newOptionList = [
-		// 			...addOption_prevOptionList,
-		// 			{
-		// 				id: nanoid(),
-		// 				type: "option",
-		// 				text: `옵션 ${action.payload.optionIdx}`,
-		// 			},
-		// 			action.payload.options[action.payload.options.length - 1],
-		// 		];
-		// 	} else {
-		// 		addOption_newOptionList = [
-		// 			...state[action.payload.questionIdx].options,
-		// 			{
-		// 				id: nanoid(),
-		// 				type: "option",
-		// 				text: `옵션 ${action.payload.optionIdx}`,
-		// 			},
-		// 		];
-		// 	}
-		// 	state[action.payload.questionIdx] = {
-		// 		options: addOption_newOptionList,
-		// 		isEtcAdded: action.payload.isEtcAdded,
-		// 	};
-		// 	return state;
 		// case DELETE_OPTION:
 		// 	return {
 		// 		options: action.payload.options.filter((el) => {

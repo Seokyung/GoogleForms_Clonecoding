@@ -30,8 +30,9 @@ const QuestionForm = (props: IQuestionForm) => {
 		dispatch(copyQuestion(props.questionIdx, question));
 	};
 
-	const onToggleIsRequired = (e: React.ChangeEvent<HTMLInputElement>) => {
-		dispatch(toggleRequired(props.questionIdx, question, e.target.checked));
+	const onToggleIsRequired = (isRequired: boolean) => {
+		console.log(isRequired);
+		dispatch(toggleRequired(props.questionIdx, isRequired));
 	};
 
 	return (
@@ -40,6 +41,7 @@ const QuestionForm = (props: IQuestionForm) => {
 			<QuestionContent questionIdx={props.questionIdx} />
 			<Divider sx={{ margin: "1rem 0" }} />
 			<QuestionFooter
+				questionIdx={props.questionIdx}
 				onCopy={onCopyQuestion}
 				onDelete={onDeleteQuestion}
 				onToggle={onToggleIsRequired}

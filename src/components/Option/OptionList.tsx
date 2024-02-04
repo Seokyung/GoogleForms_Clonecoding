@@ -3,9 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { rootState } from "../../modules/reducers";
 import {
 	addOption,
+	addEtc,
 	updateQuestionOptionData,
 } from "../../modules/actions/question";
-import { addEtc, deleteOption, deleteEtc } from "../../modules/actions/option";
+import { deleteOption, deleteEtc } from "../../modules/actions/option";
 import { IOptionList } from "../../interfaces/IOptionList";
 import OptionListItem from "./OptionListItem";
 import styled from "styled-components";
@@ -74,13 +75,13 @@ const OptionList = (props: IOptionListProps) => {
 
 	const onAddOption = (e: React.MouseEvent) => {
 		dispatch(addOption(props.questionIdx, question, optionIdx + 1));
-		dispatch(updateQuestionOptionData(props.questionIdx, question, optionData));
+		// dispatch(updateQuestionOptionData(props.questionIdx, question, optionData));
 		setOptionIdx((prev) => prev + 1);
 	};
 
 	const onAddEtc = (e: React.MouseEvent<HTMLButtonElement>) => {
 		if (isEtcAdded === false) {
-			dispatch(addEtc(question));
+			dispatch(addEtc(props.questionIdx, question));
 			setIsEtcAdded(true);
 		}
 	};
@@ -100,9 +101,9 @@ const OptionList = (props: IOptionListProps) => {
 	};
 
 	const renderOptionList = () => {
-		let newList: IOptionList[] = optionData.options;
+		let newList: IOptionList[] = optionData2.options;
 		if (isEtcAdded === true && props.optionType === "dropdown") {
-			newList = optionData.options.filter((el) => el.type !== "etc");
+			newList = optionData2.options.filter((el) => el.type !== "etc");
 		}
 
 		return newList.map((item: IOptionList, idx: number) => {

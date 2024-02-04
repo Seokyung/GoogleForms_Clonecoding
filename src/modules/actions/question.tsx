@@ -11,6 +11,7 @@ export const CHANGE_QUESTION_OPTION =
 	"question/CHANGE_QUESTION_OPTION" as const;
 
 export const ADD_OPTION = "question/ADD_OPTION" as const;
+export const ADD_ETC = "question/ADD_ETC" as const;
 
 export const UPDATE_QUESTION_OPTION_DATA =
 	"question/UPDATE_QUESTION_OPTION_DATA" as const;
@@ -75,10 +76,17 @@ export const addOption = (
 ) => ({
 	type: ADD_OPTION,
 	payload: {
-		questionIdx: questionIdx,
+		idx: questionIdx,
+		question: question,
 		optionIdx: optionIdx,
-		options: question.optionData.options,
-		isEtcAdded: question.optionData.isEtcAdded,
+	},
+});
+
+export const addEtc = (questionIdx: number, question: IQuestion) => ({
+	type: ADD_ETC,
+	payload: {
+		idx: questionIdx,
+		question: question,
 	},
 });
 
@@ -97,13 +105,11 @@ export const updateQuestionOptionData = (
 
 export const toggleRequired = (
 	questionIdx: number,
-	question: IQuestion,
-	isRequired: boolean
+	changedRequired: boolean
 ) => ({
 	type: TOGGLE_REQUIRED,
 	payload: {
 		idx: questionIdx,
-		question: question,
-		isRequired: isRequired,
+		isRequired: changedRequired,
 	},
 });

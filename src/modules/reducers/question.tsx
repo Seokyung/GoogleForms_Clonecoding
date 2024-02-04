@@ -1,6 +1,7 @@
 import { nanoid } from "nanoid";
 import { IQuestion } from "../../interfaces/IQuestion";
 import {
+	ADD_ETC,
 	ADD_OPTION,
 	ADD_QUESTION,
 	CHANGE_QUESTION_OPTION,
@@ -9,6 +10,7 @@ import {
 	DELETE_QUESTION,
 	TOGGLE_REQUIRED,
 	UPDATE_QUESTION_OPTION_DATA,
+	addEtc,
 	addOption,
 	addQuestion,
 	changeQuestionOption,
@@ -26,6 +28,7 @@ type QuestionAction =
 	| ReturnType<typeof changeQuestionTitle>
 	| ReturnType<typeof changeQuestionOption>
 	| ReturnType<typeof addOption>
+	| ReturnType<typeof addEtc>
 	| ReturnType<typeof updateQuestionOptionData>
 	| ReturnType<typeof toggleRequired>;
 
@@ -82,19 +85,59 @@ function questionReducer(
 				title: action.payload.title,
 			};
 			return state;
-		case ADD_OPTION:
-			return state;
 		case CHANGE_QUESTION_OPTION:
-			const changeOption_prevQuestionList = state.slice(0, action.payload.idx);
-			const changeOption_nextQuestionList = state.slice(action.payload.idx + 1);
-			return [
-				...changeOption_prevQuestionList,
-				{
-					...action.payload.question,
-					optionId: action.payload.optionId,
+			state[action.payload.idx] = {
+				...action.payload.question,
+				optionId: action.payload.optionId,
+			};
+			return state;
+		case ADD_OPTION:
+			state[action.payload.idx] = {
+				...action.payload.question,
+				optionData: {
+					options: state[action.payload.idx].optionData.isEtcAdded
+						? [
+								...state[action.payload.idx].optionData.options.filter(
+									(el) => el.type !== "etc"
+								),
+								{
+									id: nanoid(),
+									type: "option",
+									text: `옵션 ${action.payload.optionIdx}`,
+								},
+								state[action.payload.idx].optionData.options.filter(
+									(el) => el.type === "etc"
+								)[0],
+						  ]
+						: [
+								...state[action.payload.idx].optionData.options,
+								{
+									id: nanoid(),
+									type: "option",
+									text: `옵션 ${action.payload.optionIdx}`,
+								},
+						  ],
+					isEtcAdded: state[action.payload.idx].optionData.isEtcAdded,
 				},
-				...changeOption_nextQuestionList,
+			};
+			return state;
+		case ADD_ETC:
+			const addEtc_newOptionList = [
+				...state[action.payload.idx].optionData.options,
+				{
+					id: nanoid(),
+					type: "etc",
+					text: "기타...",
+				},
 			];
+			state[action.payload.idx] = {
+				...action.payload.question,
+				optionData: {
+					options: addEtc_newOptionList,
+					isEtcAdded: true,
+				},
+			};
+			return state;
 		case UPDATE_QUESTION_OPTION_DATA:
 			const updateOptionData_prevQuestionList = state.slice(
 				0,
@@ -113,7 +156,7 @@ function questionReducer(
 			];
 		case TOGGLE_REQUIRED:
 			state[action.payload.idx] = {
-				...action.payload.question,
+				...state[action.payload.idx],
 				isRequired: action.payload.isRequired,
 			};
 			return state;

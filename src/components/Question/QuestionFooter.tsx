@@ -1,15 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import { rootState } from "../../modules/reducers";
+import styled from "styled-components";
 import { ContentCopy, DeleteOutline } from "@mui/icons-material";
 import { Button, Divider, FormControlLabel, Switch } from "@mui/material";
-import styled from "styled-components";
 
 interface IQuestionFooter {
+	questionIdx: number;
 	onCopy: () => void;
 	onDelete: () => void;
-	onToggle: (e: React.ChangeEvent<HTMLInputElement>) => void;
+	onToggle: (isRequired: boolean) => void;
 }
 
 const QuestionFooter = (props: IQuestionFooter) => {
+	const [isRequired, setIsRequired] = useState<boolean>(
+		useSelector((state: rootState) => state.questionReducer[props.questionIdx])
+			.isRequired
+	);
+
+	const handleToggleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setIsRequired(e.target.checked);
+		props.onToggle(e.target.checked);
+	};
+
 	return (
 		<FooterContainer>
 			<div>
@@ -25,7 +38,9 @@ const QuestionFooter = (props: IQuestionFooter) => {
 				<FormControlLabel
 					label="필수"
 					labelPlacement="start"
-					control={<Switch onChange={props.onToggle} />}
+					control={
+						<Switch checked={isRequired} onChange={handleToggleChange} />
+					}
 				/>
 			</div>
 		</FooterContainer>
