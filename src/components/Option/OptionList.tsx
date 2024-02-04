@@ -99,7 +99,6 @@ const OptionList = (props: IOptionListProps) => {
 		if (isEtcAdded === true && props.optionType === "dropdown") {
 			newList = optionData.options.slice(0, optionData.options.length - 1);
 		}
-		console.log(newList);
 
 		return newList.map((item: IOptionList, idx: number) => {
 			return (

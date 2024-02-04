@@ -29,7 +29,6 @@ const OptionListItem = (props: IOptionListItem) => {
 		dispatch(
 			updateOption(props.questionIdx, question, props.listItemIdx, value)
 		);
-		console.log(props.option);
 	};
 
 	return (
