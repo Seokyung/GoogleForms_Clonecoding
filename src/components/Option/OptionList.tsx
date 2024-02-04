@@ -3,10 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { rootState } from "../../modules/reducers";
 import {
 	addOption,
+	deleteOption,
 	addEtc,
 	updateQuestionOptionData,
 } from "../../modules/actions/question";
-import { deleteOption, deleteEtc } from "../../modules/actions/option";
+import { deleteEtc } from "../../modules/actions/option";
 import { IOptionList } from "../../interfaces/IOptionList";
 import OptionListItem from "./OptionListItem";
 import styled from "styled-components";
@@ -32,13 +33,17 @@ const OptionList = (props: IOptionListProps) => {
 	const question = useSelector(
 		(state: rootState) => state.questionReducer[props.questionIdx]
 	);
-	const optionData2 = useSelector(
+	const optionData = useSelector(
 		(state: rootState) => state.questionReducer[props.questionIdx].optionData
 	);
-	const optionData = useSelector(
-		(state: rootState) => state.optionReducer[props.questionIdx]
-	);
 	const dispatch = useDispatch();
+
+	// const [optionList, setOptionList] = useState<IOptionList[]>(
+	// 	useSelector(
+	// 		(state: rootState) =>
+	// 			state.questionReducer[props.questionIdx].optionData.options
+	// 	)
+	// );
 	const [optionIdx, setOptionIdx] = useState<number>(optionData.options.length);
 	const [isEtcAdded, setIsEtcAdded] = useState<boolean>(optionData.isEtcAdded);
 
@@ -89,21 +94,20 @@ const OptionList = (props: IOptionListProps) => {
 	const onDeleteOption = (deleteId: string, idx: number) => {
 		if (optionData.options.length !== 1) {
 			if (isEtcAdded === true && optionData.options[idx].type === "etc") {
-				console.log(optionData.options.filter((el) => el.type === "etc"));
 				dispatch(deleteEtc(question));
-				dispatch(deleteOption(question, deleteId));
+				// dispatch(deleteOption(props.questionIdx, question, deleteId));
 				setIsEtcAdded(false);
 			} else {
-				dispatch(deleteOption(question, deleteId));
+				dispatch(deleteOption(props.questionIdx, question, deleteId));
 				console.log(question.optionData);
 			}
 		}
 	};
 
 	const renderOptionList = () => {
-		let newList: IOptionList[] = optionData2.options;
+		let newList: IOptionList[] = optionData.options;
 		if (isEtcAdded === true && props.optionType === "dropdown") {
-			newList = optionData2.options.filter((el) => el.type !== "etc");
+			newList = optionData.options.filter((el) => el.type !== "etc");
 		}
 
 		return newList.map((item: IOptionList, idx: number) => {

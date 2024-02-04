@@ -2,6 +2,7 @@ import { nanoid } from "nanoid";
 import { IQuestion } from "../../interfaces/IQuestion";
 import { IOptionData } from "../../interfaces/IOptionData";
 
+// QuestionList
 export const ADD_QUESTION = "question/ADD_QUESTION" as const;
 export const COPY_QUESTION = "question/COPY_QUESTION" as const;
 export const DELETE_QUESTION = "question/DELETE_QUESTION" as const;
@@ -10,7 +11,9 @@ export const CHANGE_QUESTION_TITLE = "question/CHANGE_QUESTION_TITLE" as const;
 export const CHANGE_QUESTION_OPTION =
 	"question/CHANGE_QUESTION_OPTION" as const;
 
+// OptionList
 export const ADD_OPTION = "question/ADD_OPTION" as const;
+export const DELETE_OPTION = "question/DELETE_OPTION" as const;
 export const ADD_ETC = "question/ADD_ETC" as const;
 
 export const UPDATE_QUESTION_OPTION_DATA =
@@ -18,6 +21,7 @@ export const UPDATE_QUESTION_OPTION_DATA =
 
 export const TOGGLE_REQUIRED = "question/TOGGLE_REQUIRED" as const;
 
+// QuestionList
 export const addQuestion = () => ({
 	type: ADD_QUESTION,
 	payload: {
@@ -69,6 +73,7 @@ export const changeQuestionOption = (
 	},
 });
 
+// OptionList
 export const addOption = (
 	questionIdx: number,
 	question: IQuestion,
@@ -79,6 +84,19 @@ export const addOption = (
 		idx: questionIdx,
 		question: question,
 		optionIdx: optionIdx,
+	},
+});
+
+export const deleteOption = (
+	questionIdx: number,
+	question: IQuestion,
+	deleteId: string
+) => ({
+	type: DELETE_OPTION,
+	payload: {
+		idx: questionIdx,
+		question: question,
+		deleteId: deleteId,
 	},
 });
 

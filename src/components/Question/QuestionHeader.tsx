@@ -20,6 +20,7 @@ import {
 
 interface IQuestionHeader {
 	questionIdx: number;
+	setQuestionOptionId: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const QuestionHeader = (props: IQuestionHeader) => {
@@ -46,11 +47,9 @@ const QuestionHeader = (props: IQuestionHeader) => {
 		setAnchorEl(null);
 	};
 
-	const handleMenuItemClick = (
-		e: React.MouseEvent<HTMLElement>,
-		idx: number
-	) => {
+	const handleMenuItemClick = (idx: number) => {
 		dispatch(changeQuestionOption(props.questionIdx, question, idx));
+		props.setQuestionOptionId(idx);
 		setAnchorEl(null);
 	};
 
@@ -88,7 +87,7 @@ const QuestionHeader = (props: IQuestionHeader) => {
 					<MenuItem
 						key={item.oid}
 						id={item.name}
-						onClick={(e) => handleMenuItemClick(e, item.oid)}
+						onClick={() => handleMenuItemClick(item.oid)}
 					>
 						<ListItemIcon>{item.icon}</ListItemIcon>
 						<ListItemText>{item.text}</ListItemText>
@@ -99,7 +98,7 @@ const QuestionHeader = (props: IQuestionHeader) => {
 					<MenuItem
 						key={item.oid}
 						id={item.name}
-						onClick={(e) => handleMenuItemClick(e, item.oid)}
+						onClick={() => handleMenuItemClick(item.oid)}
 					>
 						<ListItemIcon>{item.icon}</ListItemIcon>
 						<ListItemText>{item.text}</ListItemText>

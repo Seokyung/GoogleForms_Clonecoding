@@ -1,20 +1,15 @@
 import React from "react";
-import { useSelector } from "react-redux";
-import { rootState } from "../../modules/reducers";
 import OptionText from "../Option/OptionText";
 import OptionList from "../Option/OptionList";
 
 interface IQuestionContent {
 	questionIdx: number;
+	questionOptionId: number;
 }
 
 const QuestionContent = (props: IQuestionContent) => {
-	const optionId = useSelector(
-		(state: rootState) => state.questionReducer[props.questionIdx].optionId
-	);
-
 	const renderOption = () => {
-		switch (optionId) {
+		switch (props.questionOptionId) {
 			case 0:
 				return <OptionText isLong={false} placeholderText="단답형 텍스트" />;
 			case 1:

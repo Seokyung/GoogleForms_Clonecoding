@@ -7,6 +7,7 @@ import {
 	CHANGE_QUESTION_OPTION,
 	CHANGE_QUESTION_TITLE,
 	COPY_QUESTION,
+	DELETE_OPTION,
 	DELETE_QUESTION,
 	TOGGLE_REQUIRED,
 	UPDATE_QUESTION_OPTION_DATA,
@@ -16,6 +17,7 @@ import {
 	changeQuestionOption,
 	changeQuestionTitle,
 	copyQuestion,
+	deleteOption,
 	deleteQuestion,
 	toggleRequired,
 	updateQuestionOptionData,
@@ -28,6 +30,7 @@ type QuestionAction =
 	| ReturnType<typeof changeQuestionTitle>
 	| ReturnType<typeof changeQuestionOption>
 	| ReturnType<typeof addOption>
+	| ReturnType<typeof deleteOption>
 	| ReturnType<typeof addEtc>
 	| ReturnType<typeof updateQuestionOptionData>
 	| ReturnType<typeof toggleRequired>;
@@ -117,6 +120,17 @@ function questionReducer(
 									text: `옵션 ${action.payload.optionIdx}`,
 								},
 						  ],
+					isEtcAdded: state[action.payload.idx].optionData.isEtcAdded,
+				},
+			};
+			return state;
+		case DELETE_OPTION:
+			state[action.payload.idx] = {
+				...action.payload.question,
+				optionData: {
+					options: state[action.payload.idx].optionData.options.filter((el) => {
+						return el.id !== action.payload.deleteId;
+					}),
 					isEtcAdded: state[action.payload.idx].optionData.isEtcAdded,
 				},
 			};

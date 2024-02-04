@@ -1,15 +1,8 @@
 import { nanoid } from "nanoid";
 import { IOptionData } from "../../interfaces/IOptionData";
-import {
-	DELETE_OPTION,
-	deleteEtc,
-	deleteOption,
-	updateOption,
-} from "../actions/option";
-import { IOptionList } from "../../interfaces/IOptionList";
+import { deleteEtc, updateOption } from "../actions/option";
 
 type OptionAction =
-	| ReturnType<typeof deleteOption>
 	| ReturnType<typeof updateOption>
 	| ReturnType<typeof deleteEtc>;
 
@@ -74,33 +67,6 @@ function optionReducer(
 		// 			},
 		// 		},
 		// 		...updateOption_nextQuestionList,
-		// 	];
-		// case ADD_ETC:
-		// 	const addEtc_prevQuestionList = state.slice(
-		// 		0,
-		// 		action.payload.questionIdx
-		// 	);
-		// 	const addEtc_nextQuestionList = state.slice(
-		// 		action.payload.questionIdx + 1
-		// 	);
-		// 	const addEtc_newOptionList = [
-		// 		...action.payload.optionList,
-		// 		{
-		// 			id: nanoid(),
-		// 			type: "etc",
-		// 			text: "기타...",
-		// 		},
-		// 	];
-		// 	return [
-		// 		...addEtc_prevQuestionList,
-		// 		{
-		// 			...action.payload.question,
-		// 			optionData: {
-		// 				options: addEtc_newOptionList,
-		// 				isEtcAdded: true,
-		// 			},
-		// 		},
-		// 		...addEtc_nextQuestionList,
 		// 	];
 		// case DELETE_ETC:
 		// 	const toggleEtc_prevQuestionList = state.slice(

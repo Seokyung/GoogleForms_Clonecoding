@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { rootState } from "../../modules/reducers";
 import {
@@ -22,6 +22,12 @@ const QuestionForm = (props: IQuestionForm) => {
 	);
 	const dispatch = useDispatch();
 
+	const [questionOptionId, setQuestionOptionId] = useState<number>(
+		useSelector(
+			(state: rootState) => state.questionReducer[props.questionIdx].optionId
+		)
+	);
+
 	const onDeleteQuestion = () => {
 		dispatch(deleteQuestion(question.qid));
 	};
@@ -31,14 +37,19 @@ const QuestionForm = (props: IQuestionForm) => {
 	};
 
 	const onToggleIsRequired = (isRequired: boolean) => {
-		console.log(isRequired);
 		dispatch(toggleRequired(props.questionIdx, isRequired));
 	};
 
 	return (
 		<SurveyBox>
-			<QuestionHeader questionIdx={props.questionIdx} />
-			<QuestionContent questionIdx={props.questionIdx} />
+			<QuestionHeader
+				questionIdx={props.questionIdx}
+				setQuestionOptionId={setQuestionOptionId}
+			/>
+			<QuestionContent
+				questionIdx={props.questionIdx}
+				questionOptionId={questionOptionId}
+			/>
 			<Divider sx={{ margin: "1rem 0" }} />
 			<QuestionFooter
 				questionIdx={props.questionIdx}
