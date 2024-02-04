@@ -169,7 +169,39 @@ function questionReducer(
 				...deleteOption_nextQuestionList,
 			];
 		case UPDATE_OPTION_TEXT:
-			return state;
+			const updateOption_prevQuestionList = state.slice(
+				0,
+				action.payload.questionIdx
+			);
+			const updateOption_nextQuestionList = state.slice(
+				action.payload.questionIdx + 1
+			);
+			const updateOption_prevOptionList = action.payload.optionList.slice(
+				0,
+				action.payload.optionIdx
+			);
+			const updateOption_nextOptionList = action.payload.optionList.slice(
+				action.payload.optionIdx + 1
+			);
+			const updateOption_newOptionList: IOptionList[] = [
+				...updateOption_prevOptionList,
+				{
+					id: nanoid(),
+					text: action.payload.updatedText,
+				},
+				...updateOption_nextOptionList,
+			];
+			return [
+				...updateOption_prevQuestionList,
+				{
+					...action.payload.question,
+					optionData: {
+						options: updateOption_newOptionList,
+						isEtcAdded: action.payload.isEtcAdded,
+					},
+				},
+				...updateOption_nextQuestionList,
+			];
 		case ADD_ETC:
 			const addEtc_prevQuestionList = state.slice(
 				0,

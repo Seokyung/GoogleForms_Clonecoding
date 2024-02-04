@@ -1,7 +1,8 @@
-import React, { ReactNode, useState } from "react";
+import React, { ReactNode } from "react";
 import { IOptionList } from "../../interfaces/IOptionList";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { rootState } from "../../modules/reducers";
+import { updateOption } from "../../modules/actions/question";
 import { IconButton, ListItem, ListItemText, TextField } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
@@ -14,19 +15,21 @@ interface IOptionListItem {
 }
 
 const OptionListItem = (props: IOptionListItem) => {
-	const [optionText, setOptionText] = useState<string>(props.option.text);
+	const question = useSelector(
+		(state: rootState) => state.questionReducer[props.questionIdx]
+	);
+	const dispatch = useDispatch();
 	const optionList = useSelector(
 		(state: rootState) =>
 			state.questionReducer[props.questionIdx].optionData.options
 	);
-	const isEtcAdded = useSelector(
-		(state: rootState) =>
-			state.questionReducer[props.questionIdx].optionData.isEtcAdded
-	);
 
 	const onTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { value } = e.target;
-		setOptionText(value);
+		dispatch(
+			updateOption(props.questionIdx, question, props.listItemIdx, value)
+		);
+		console.log(props.option);
 	};
 
 	return (

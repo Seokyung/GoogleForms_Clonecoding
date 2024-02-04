@@ -96,9 +96,21 @@ export const deleteOption = (
 	},
 });
 
-export const updateOption = () => ({
+export const updateOption = (
+	questionIdx: number,
+	question: IQuestion,
+	optionIdx: number,
+	updatedText: string
+) => ({
 	type: UPDATE_OPTION_TEXT,
-	payload: {},
+	payload: {
+		questionIdx: questionIdx,
+		question: question,
+		optionIdx: optionIdx,
+		updatedText: updatedText,
+		optionList: question.optionData.options,
+		isEtcAdded: question.optionData.isEtcAdded,
+	},
 });
 
 export const addEtc = (questionIdx: number, question: IQuestion) => ({
