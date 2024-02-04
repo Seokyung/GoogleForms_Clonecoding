@@ -10,8 +10,8 @@ export const CHANGE_QUESTION_OPTION =
 	"question/CHANGE_QUESTION_OPTION" as const;
 
 export const ADD_OPTION = "question/ADD_OPTION" as const;
-export const CHANGE_OPTION_TEXT = "question/CHANGE_OPTION_TEXT" as const;
 export const DELETE_OPTION = "question/DELETE_OPTION" as const;
+export const UPDATE_OPTION_TEXT = "question/CHANGE_OPTION_TEXT" as const;
 
 export const ADD_ETC = "question/ADD_ETC" as const;
 export const TOGGLE_ETC = "question/TOGGLE_ETC" as const;
@@ -82,13 +82,22 @@ export const addOption = (
 	},
 });
 
-export const updateOption = () => ({
-	type: CHANGE_OPTION_TEXT,
-	payload: {},
+export const deleteOption = (
+	questionIdx: number,
+	question: IQuestion,
+	deleteId: string
+) => ({
+	type: DELETE_OPTION,
+	payload: {
+		questionIdx: questionIdx,
+		question: question,
+		deleteId: deleteId,
+		optionList: question.optionData.options,
+	},
 });
 
-export const deleteOption = () => ({
-	type: DELETE_OPTION,
+export const updateOption = () => ({
+	type: UPDATE_OPTION_TEXT,
 	payload: {},
 });
 

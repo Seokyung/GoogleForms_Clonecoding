@@ -19,6 +19,10 @@ const OptionListItem = (props: IOptionListItem) => {
 		(state: rootState) =>
 			state.questionReducer[props.questionIdx].optionData.options
 	);
+	const isEtcAdded = useSelector(
+		(state: rootState) =>
+			state.questionReducer[props.questionIdx].optionData.isEtcAdded
+	);
 
 	const onTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { value } = e.target;

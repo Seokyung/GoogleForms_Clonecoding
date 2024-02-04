@@ -10,7 +10,7 @@ import {
 	DELETE_OPTION,
 	DELETE_QUESTION,
 	TOGGLE_ETC,
-	CHANGE_OPTION_TEXT,
+	UPDATE_OPTION_TEXT,
 	addEtc,
 	addOption,
 	addQuestion,
@@ -31,9 +31,9 @@ type QuestionAction =
 	| ReturnType<typeof changeQuestionTitle>
 	| ReturnType<typeof changeQuestionOption>
 	| ReturnType<typeof addOption>
-	| ReturnType<typeof addEtc>
-	| ReturnType<typeof updateOption>
 	| ReturnType<typeof deleteOption>
+	| ReturnType<typeof updateOption>
+	| ReturnType<typeof addEtc>
 	| ReturnType<typeof toggleEtc>;
 
 export type QuestionState = IQuestion[];
@@ -147,9 +147,28 @@ function questionReducer(
 				},
 				...addOption_nextQuestionList,
 			];
-		case CHANGE_OPTION_TEXT:
-			return state;
 		case DELETE_OPTION:
+			const deleteOption_prevQuestionList = state.slice(
+				0,
+				action.payload.questionIdx
+			);
+			const deleteOption_nextQuestionList = state.slice(
+				action.payload.questionIdx + 1
+			);
+			return [
+				...deleteOption_prevQuestionList,
+				{
+					...action.payload.question,
+					optionData: {
+						options: action.payload.optionList.filter((el) => {
+							return el.id !== action.payload.deleteId;
+						}),
+						isEtcAdded: true,
+					},
+				},
+				...deleteOption_nextQuestionList,
+			];
+		case UPDATE_OPTION_TEXT:
 			return state;
 		case ADD_ETC:
 			const addEtc_prevQuestionList = state.slice(
