@@ -1,7 +1,11 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { rootState } from "../../modules/reducers";
-import { copyQuestion, deleteQuestion } from "../../modules/actions/question";
+import {
+	copyQuestion,
+	deleteQuestion,
+	toggleRequired,
+} from "../../modules/actions/question";
 import QuestionHeader from "./QuestionHeader";
 import QuestionContent from "./QuestionContent";
 import QuestionFooter from "./QuestionFooter";
@@ -26,12 +30,20 @@ const QuestionForm = (props: IQuestionForm) => {
 		dispatch(copyQuestion(props.questionIdx, question));
 	};
 
+	const onToggleIsRequired = (e: React.ChangeEvent<HTMLInputElement>) => {
+		dispatch(toggleRequired(props.questionIdx, question, e.target.checked));
+	};
+
 	return (
 		<SurveyBox>
 			<QuestionHeader questionIdx={props.questionIdx} />
 			<QuestionContent questionIdx={props.questionIdx} />
 			<Divider sx={{ margin: "1rem 0" }} />
-			<QuestionFooter onCopy={onCopyQuestion} onDelete={onDeleteQuestion} />
+			<QuestionFooter
+				onCopy={onCopyQuestion}
+				onDelete={onDeleteQuestion}
+				onToggle={onToggleIsRequired}
+			/>
 		</SurveyBox>
 	);
 };

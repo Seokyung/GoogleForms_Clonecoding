@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { rootState } from "../../modules/reducers";
 import {
-	addEtc,
 	addOption,
-	deleteOption,
+	updateQuestionOptionData,
 } from "../../modules/actions/question";
+import { addEtc, deleteOption, deleteEtc } from "../../modules/actions/option";
 import { IOptionList } from "../../interfaces/IOptionList";
 import OptionListItem from "./OptionListItem";
 import styled from "styled-components";
@@ -31,11 +31,13 @@ const OptionList = (props: IOptionListProps) => {
 	const question = useSelector(
 		(state: rootState) => state.questionReducer[props.questionIdx]
 	);
-	const optionData = useSelector(
+	const optionData2 = useSelector(
 		(state: rootState) => state.questionReducer[props.questionIdx].optionData
 	);
+	const optionData = useSelector(
+		(state: rootState) => state.optionReducer[props.questionIdx]
+	);
 	const dispatch = useDispatch();
-
 	const [optionIdx, setOptionIdx] = useState<number>(optionData.options.length);
 	const [isEtcAdded, setIsEtcAdded] = useState<boolean>(optionData.isEtcAdded);
 
@@ -72,32 +74,35 @@ const OptionList = (props: IOptionListProps) => {
 
 	const onAddOption = (e: React.MouseEvent) => {
 		dispatch(addOption(props.questionIdx, question, optionIdx + 1));
+		dispatch(updateQuestionOptionData(props.questionIdx, question, optionData));
 		setOptionIdx((prev) => prev + 1);
 	};
 
 	const onAddEtc = (e: React.MouseEvent<HTMLButtonElement>) => {
 		if (isEtcAdded === false) {
-			dispatch(addEtc(props.questionIdx, question));
+			dispatch(addEtc(question));
 			setIsEtcAdded(true);
 		}
 	};
 
-	const onDeleteOption = (deleteId: string) => {
+	const onDeleteOption = (deleteId: string, idx: number) => {
 		if (optionData.options.length !== 1) {
-			if (
-				isEtcAdded === true &&
-				optionData.options[optionData.options.length - 1].id === deleteId
-			) {
-				setIsEtcAdded((prev) => !prev);
+			if (isEtcAdded === true && optionData.options[idx].type === "etc") {
+				console.log(optionData.options.filter((el) => el.type === "etc"));
+				dispatch(deleteEtc(question));
+				dispatch(deleteOption(question, deleteId));
+				setIsEtcAdded(false);
+			} else {
+				dispatch(deleteOption(question, deleteId));
+				console.log(question.optionData);
 			}
-			dispatch(deleteOption(props.questionIdx, question, deleteId));
 		}
 	};
 
 	const renderOptionList = () => {
 		let newList: IOptionList[] = optionData.options;
 		if (isEtcAdded === true && props.optionType === "dropdown") {
-			newList = optionData.options.slice(0, optionData.options.length - 1);
+			newList = optionData.options.filter((el) => el.type !== "etc");
 		}
 
 		return newList.map((item: IOptionList, idx: number) => {

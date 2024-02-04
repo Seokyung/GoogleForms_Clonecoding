@@ -6,6 +6,7 @@ import styled from "styled-components";
 interface IQuestionFooter {
 	onCopy: () => void;
 	onDelete: () => void;
+	onToggle: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const QuestionFooter = (props: IQuestionFooter) => {
@@ -24,7 +25,7 @@ const QuestionFooter = (props: IQuestionFooter) => {
 				<FormControlLabel
 					label="필수"
 					labelPlacement="start"
-					control={<Switch />}
+					control={<Switch onChange={props.onToggle} />}
 				/>
 			</div>
 		</FooterContainer>
