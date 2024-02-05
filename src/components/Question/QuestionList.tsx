@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { rootState } from "../../modules/reducers";
+import { IQuestion } from "../../interfaces/IQuestion";
 import QuestionForm from "./QuestionForm";
 import styled from "styled-components";
 
@@ -9,7 +10,7 @@ const QuestionList = () => {
 
 	return (
 		<Container>
-			{questionList.map((item, idx) => {
+			{questionList.map((item: IQuestion, idx: number) => {
 				return <QuestionForm key={item.qid} questionIdx={idx} />;
 			})}
 		</Container>

@@ -47,7 +47,7 @@ const QuestionForm = (props: IQuestionForm) => {
 				questionIdx={props.questionIdx}
 				questionOptionId={questionOptionId}
 			/>
-			<Divider sx={{ margin: "1rem 0" }} />
+			<Divider sx={{ margin: "0.75rem 0" }} />
 			<QuestionFooter
 				questionIdx={props.questionIdx}
 				onCopy={onCopyQuestion}

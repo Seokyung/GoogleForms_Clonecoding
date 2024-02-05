@@ -27,7 +27,7 @@ const QuestionFooter = (props: IQuestionFooter) => {
 		<FooterContainer>
 			<div>
 				<IconButton onClick={props.onCopy} size="large">
-					<ContentCopy />
+					<ContentCopy sx={{ height: "22px" }} />
 				</IconButton>
 				<IconButton onClick={props.onDelete} size="large">
 					<DeleteOutline />

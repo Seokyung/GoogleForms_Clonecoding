@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import PreviewSurvey from "../components/Survey/PreviewSurvey";
+import PreviewSurvey from "../components/preview/PreviewSurvey";
 
 const PreviewPage = () => {
 	return (

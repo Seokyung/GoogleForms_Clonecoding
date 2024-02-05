@@ -1,12 +1,14 @@
 import React from "react";
 import styled from "styled-components";
-import PreviewTitle from "../Title/PreviewTitle";
+import PreviewTitle from "./PreviewTitle";
+import PreviewQuestionList from "./PreviewQuestionList";
 
 const PreviewSurvey = () => {
 	return (
 		<Container>
 			<SurveyContainer>
 				<PreviewTitle />
+				<PreviewQuestionList />
 			</SurveyContainer>
 		</Container>
 	);

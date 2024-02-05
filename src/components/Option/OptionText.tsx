@@ -1,5 +1,6 @@
 import React from "react";
 import { TextField } from "@mui/material";
+import styled from "styled-components";
 
 interface IOptionInput {
 	placeholderText: string;
@@ -8,7 +9,7 @@ interface IOptionInput {
 
 const OptionText = (props: IOptionInput) => {
 	return (
-		<div>
+		<Container>
 			<TextField
 				variant="standard"
 				placeholder={props.placeholderText}
@@ -17,8 +18,12 @@ const OptionText = (props: IOptionInput) => {
 				fullWidth={props.isLong}
 				disabled
 			/>
-		</div>
+		</Container>
 	);
 };
+
+const Container = styled.div`
+	margin: 1rem 0;
+`;
 
 export default OptionText;
