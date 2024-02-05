@@ -15,23 +15,17 @@ const PreviewOptionText = (props: IOptionInput) => {
 	};
 
 	return (
-		<Container>
-			<StyledTextField
-				variant="standard"
-				margin="normal"
-				placeholder="내 답변"
-				value={text}
-				onChange={onTextChange}
-				multiline={props.isLong}
-				fullWidth={props.isLong}
-			/>
-		</Container>
+		<StyledTextField
+			variant="standard"
+			margin="normal"
+			placeholder="내 답변"
+			value={text}
+			onChange={onTextChange}
+			multiline={props.isLong}
+			fullWidth={props.isLong}
+		/>
 	);
 };
-
-const Container = styled.div`
-	margin-top: 0.75rem;
-`;
 
 const StyledTextField = styled(TextField)(() => ({
 	"& .MuiInputBase-input": {

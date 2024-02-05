@@ -119,7 +119,6 @@ const Container = styled.div`
 const QuestionField = styled(TextField)(() => ({
 	"& .MuiInputBase-root": {
 		width: "100%",
-		// minWidth: "400px",
 		padding: "16px",
 		backgroundColor: "rgba(0, 0, 0, 0.025)",
 	},

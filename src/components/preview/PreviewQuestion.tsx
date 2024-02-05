@@ -1,6 +1,7 @@
 import React from "react";
 import { IQuestion } from "../../interfaces/IQuestion";
 import PreviewOptionText from "./PreviewOptionText";
+import PreviewOptionList from "./PreviewOptionList";
 import styled from "styled-components";
 import { PreviewBox } from "../../styles/PreviewBox";
 
@@ -16,11 +17,26 @@ const PreviewQuestion = (props: IPreviewQuestion) => {
 			case 1:
 				return <PreviewOptionText isLong={true} />;
 			case 2:
-				return;
+				return (
+					<PreviewOptionList
+						optionType="radio"
+						optionData={props.question.optionData}
+					/>
+				);
 			case 3:
-				return;
+				return (
+					<PreviewOptionList
+						optionType="checkbox"
+						optionData={props.question.optionData}
+					/>
+				);
 			case 4:
-				return;
+				return (
+					<PreviewOptionList
+						optionType="dropdown"
+						optionData={props.question.optionData}
+					/>
+				);
 			default:
 				break;
 		}
@@ -38,6 +54,7 @@ const PreviewQuestion = (props: IPreviewQuestion) => {
 };
 
 const QuestionTitle = styled.div`
+	margin-bottom: 1rem;
 	span {
 		font-size: 1rem;
 		font-weight: 500;

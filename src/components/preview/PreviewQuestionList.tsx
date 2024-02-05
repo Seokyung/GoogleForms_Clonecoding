@@ -1,7 +1,7 @@
 import React from "react";
 import { IQuestion } from "../../interfaces/IQuestion";
-import styled from "styled-components";
 import PreviewQuestion from "./PreviewQuestion";
+import styled from "styled-components";
 
 const PreviewQuestionList = () => {
 	const questionList = JSON.parse(localStorage.getItem("survey") || '""');

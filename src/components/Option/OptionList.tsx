@@ -44,10 +44,6 @@ const OptionList = (props: IOptionListProps) => {
 	const [optionIdx, setOptionIdx] = useState<number>(optionData.options.length);
 	const [isEtcAdded, setIsEtcAdded] = useState<boolean>(optionData.isEtcAdded);
 
-	// useEffect(() => {
-	// 	console.log(op2);
-	// }, [optionList]);
-
 	const renderRadio = () => {
 		return (
 			<ListItemIcon>
@@ -82,14 +78,12 @@ const OptionList = (props: IOptionListProps) => {
 	const onAddOption = (e: React.MouseEvent) => {
 		dispatch(addOption(props.questionIdx, question, optionIdx + 1));
 		setOptionIdx((prev) => prev + 1);
-		// setOp2(optionList);
 	};
 
 	const onAddEtc = (e: React.MouseEvent<HTMLButtonElement>) => {
 		if (isEtcAdded === false) {
 			dispatch(addEtc(props.questionIdx, question));
 			setIsEtcAdded(true);
-			// setOp2(optionList);
 		}
 	};
 
@@ -102,7 +96,6 @@ const OptionList = (props: IOptionListProps) => {
 				dispatch(deleteOption(props.questionIdx, question, deleteId));
 				setOptionIdx((prev) => prev - 1);
 			}
-			// setOp2(optionList);
 		}
 	};
 

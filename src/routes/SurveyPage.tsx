@@ -13,6 +13,7 @@ const SurveyPage = () => {
 const Container = styled.div`
 	display: flex;
 	padding: 1rem;
+	padding-bottom: 5rem;
 	width: 100%;
 `;
 
