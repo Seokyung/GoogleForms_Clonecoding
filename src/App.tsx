@@ -1,23 +1,16 @@
 import React from "react";
-import SurveyForm from "./components/Survey/SurveyForm";
-import { GlobalStyle } from "./styles/GlobalStyle";
-import styled from "styled-components";
+import { Route, Routes } from "react-router-dom";
+import SurveyPage from "./routes/SurveyPage";
+import PreviewPage from "./routes/PreviewPage";
 
 function App() {
 	return (
-		<>
-			<GlobalStyle />
-			<AppContainer>
-				<SurveyForm />
-			</AppContainer>
-		</>
+		<Routes>
+			<Route path="/" element={<SurveyPage />} />
+			<Route path="/preview" element={<PreviewPage />} />
+			<Route path="*" element={<SurveyPage />} />
+		</Routes>
 	);
 }
-
-const AppContainer = styled.div`
-	display: flex;
-	padding: 1rem;
-	width: 100%;
-`;
 
 export default App;

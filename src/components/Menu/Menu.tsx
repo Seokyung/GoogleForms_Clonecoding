@@ -16,7 +16,7 @@ const Menu = () => {
 	};
 
 	const onPreviewSurvey = () => {
-		console.log("preview");
+		window.open("http://localhost:3000/preview", "_blank");
 	};
 
 	return (
