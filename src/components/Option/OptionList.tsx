@@ -5,9 +5,8 @@ import {
 	addOption,
 	deleteOption,
 	addEtc,
-	updateQuestionOptionData,
+	deleteEtc,
 } from "../../modules/actions/question";
-import { deleteEtc } from "../../modules/actions/option";
 import { IOptionList } from "../../interfaces/IOptionList";
 import OptionListItem from "./OptionListItem";
 import styled from "styled-components";
@@ -38,12 +37,6 @@ const OptionList = (props: IOptionListProps) => {
 	);
 	const dispatch = useDispatch();
 
-	// const [optionList, setOptionList] = useState<IOptionList[]>(
-	// 	useSelector(
-	// 		(state: rootState) =>
-	// 			state.questionReducer[props.questionIdx].optionData.options
-	// 	)
-	// );
 	const [optionIdx, setOptionIdx] = useState<number>(optionData.options.length);
 	const [isEtcAdded, setIsEtcAdded] = useState<boolean>(optionData.isEtcAdded);
 
@@ -80,7 +73,6 @@ const OptionList = (props: IOptionListProps) => {
 
 	const onAddOption = (e: React.MouseEvent) => {
 		dispatch(addOption(props.questionIdx, question, optionIdx + 1));
-		// dispatch(updateQuestionOptionData(props.questionIdx, question, optionData));
 		setOptionIdx((prev) => prev + 1);
 	};
 
@@ -94,12 +86,11 @@ const OptionList = (props: IOptionListProps) => {
 	const onDeleteOption = (deleteId: string, idx: number) => {
 		if (optionData.options.length !== 1) {
 			if (isEtcAdded === true && optionData.options[idx].type === "etc") {
-				dispatch(deleteEtc(question));
-				// dispatch(deleteOption(props.questionIdx, question, deleteId));
+				dispatch(deleteEtc(props.questionIdx, question));
 				setIsEtcAdded(false);
 			} else {
 				dispatch(deleteOption(props.questionIdx, question, deleteId));
-				console.log(question.optionData);
+				setOptionIdx((prev) => prev - 1);
 			}
 		}
 	};
@@ -109,7 +100,6 @@ const OptionList = (props: IOptionListProps) => {
 		if (isEtcAdded === true && props.optionType === "dropdown") {
 			newList = optionData.options.filter((el) => el.type !== "etc");
 		}
-
 		return newList.map((item: IOptionList, idx: number) => {
 			return (
 				<OptionListItem

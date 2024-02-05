@@ -2,7 +2,7 @@ import React, { ReactNode } from "react";
 import { IOptionList } from "../../interfaces/IOptionList";
 import { useDispatch, useSelector } from "react-redux";
 import { rootState } from "../../modules/reducers";
-import { updateOption } from "../../modules/actions/option";
+import { updateOptionData } from "../../modules/actions/question";
 import { IconButton, ListItem, ListItemText, TextField } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
@@ -26,7 +26,7 @@ const OptionListItem = (props: IOptionListItem) => {
 
 	const onTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { value } = e.target;
-		dispatch(updateOption(question, props.listItemIdx, value));
+		// dispatch(updateOptionData(props.questionIdx,question, value));
 	};
 
 	return (

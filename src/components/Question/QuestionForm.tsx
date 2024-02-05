@@ -17,15 +17,12 @@ interface IQuestionForm {
 }
 
 const QuestionForm = (props: IQuestionForm) => {
+	const dispatch = useDispatch();
 	const question = useSelector(
 		(state: rootState) => state.questionReducer[props.questionIdx]
 	);
-	const dispatch = useDispatch();
-
 	const [questionOptionId, setQuestionOptionId] = useState<number>(
-		useSelector(
-			(state: rootState) => state.questionReducer[props.questionIdx].optionId
-		)
+		question.optionId
 	);
 
 	const onDeleteQuestion = () => {

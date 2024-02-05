@@ -3,6 +3,7 @@ import { IQuestion } from "../../interfaces/IQuestion";
 import { IOptionData } from "../../interfaces/IOptionData";
 
 // QuestionList
+export const GET_QUESTION = "question/GET_QUESTION" as const;
 export const ADD_QUESTION = "question/ADD_QUESTION" as const;
 export const COPY_QUESTION = "question/COPY_QUESTION" as const;
 export const DELETE_QUESTION = "question/DELETE_QUESTION" as const;
@@ -15,6 +16,7 @@ export const CHANGE_QUESTION_OPTION =
 export const ADD_OPTION = "question/ADD_OPTION" as const;
 export const DELETE_OPTION = "question/DELETE_OPTION" as const;
 export const ADD_ETC = "question/ADD_ETC" as const;
+export const DELETE_ETC = "question/DELETE_ETC" as const;
 
 export const UPDATE_QUESTION_OPTION_DATA =
 	"question/UPDATE_QUESTION_OPTION_DATA" as const;
@@ -22,6 +24,11 @@ export const UPDATE_QUESTION_OPTION_DATA =
 export const TOGGLE_REQUIRED = "question/TOGGLE_REQUIRED" as const;
 
 // QuestionList
+export const getQuestion = () => ({
+	type: GET_QUESTION,
+	payload: {},
+});
+
 export const addQuestion = () => ({
 	type: ADD_QUESTION,
 	payload: {
@@ -108,7 +115,15 @@ export const addEtc = (questionIdx: number, question: IQuestion) => ({
 	},
 });
 
-export const updateQuestionOptionData = (
+export const deleteEtc = (questionIdx: number, question: IQuestion) => ({
+	type: DELETE_ETC,
+	payload: {
+		idx: questionIdx,
+		question: question,
+	},
+});
+
+export const updateOptionData = (
 	questionIdx: number,
 	question: IQuestion,
 	updatedData: IOptionData

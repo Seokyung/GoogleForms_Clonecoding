@@ -7,8 +7,10 @@ import {
 	CHANGE_QUESTION_OPTION,
 	CHANGE_QUESTION_TITLE,
 	COPY_QUESTION,
+	DELETE_ETC,
 	DELETE_OPTION,
 	DELETE_QUESTION,
+	GET_QUESTION,
 	TOGGLE_REQUIRED,
 	UPDATE_QUESTION_OPTION_DATA,
 	addEtc,
@@ -17,10 +19,12 @@ import {
 	changeQuestionOption,
 	changeQuestionTitle,
 	copyQuestion,
+	deleteEtc,
 	deleteOption,
 	deleteQuestion,
+	getQuestion,
 	toggleRequired,
-	updateQuestionOptionData,
+	updateOptionData,
 } from "../actions/question";
 
 type QuestionAction =
@@ -29,10 +33,12 @@ type QuestionAction =
 	| ReturnType<typeof deleteQuestion>
 	| ReturnType<typeof changeQuestionTitle>
 	| ReturnType<typeof changeQuestionOption>
+	| ReturnType<typeof getQuestion>
 	| ReturnType<typeof addOption>
 	| ReturnType<typeof deleteOption>
 	| ReturnType<typeof addEtc>
-	| ReturnType<typeof updateQuestionOptionData>
+	| ReturnType<typeof deleteEtc>
+	| ReturnType<typeof updateOptionData>
 	| ReturnType<typeof toggleRequired>;
 
 export type QuestionState = IQuestion[];
@@ -55,6 +61,8 @@ function questionReducer(
 	action: QuestionAction
 ): IQuestion[] {
 	switch (action.type) {
+		case GET_QUESTION:
+			return state;
 		case ADD_QUESTION:
 			return [
 				...state,
@@ -152,22 +160,23 @@ function questionReducer(
 				},
 			};
 			return state;
-		case UPDATE_QUESTION_OPTION_DATA:
-			const updateOptionData_prevQuestionList = state.slice(
-				0,
-				action.payload.idx
-			);
-			const updateOptionData_nextQuestionList = state.slice(
-				action.payload.idx + 1
-			);
-			return [
-				...updateOptionData_prevQuestionList,
-				{
-					...action.payload.question,
-					optionData: action.payload.updatedData,
+		case DELETE_ETC:
+			state[action.payload.idx] = {
+				...action.payload.question,
+				optionData: {
+					options: state[action.payload.idx].optionData.options.filter((el) => {
+						return el.type !== "etc";
+					}),
+					isEtcAdded: false,
 				},
-				...updateOptionData_nextQuestionList,
-			];
+			};
+			return state;
+		case UPDATE_QUESTION_OPTION_DATA:
+			state[action.payload.idx] = {
+				...action.payload.question,
+				optionData: action.payload.updatedData,
+			};
+			return state;
 		case TOGGLE_REQUIRED:
 			state[action.payload.idx] = {
 				...state[action.payload.idx],
