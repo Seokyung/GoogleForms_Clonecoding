@@ -1,18 +1,11 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
+import PreviewSurvey from "../components/Survey/PreviewSurvey";
 
 const PreviewPage = () => {
-	const titleData = JSON.parse(localStorage.getItem("title") || '""');
-	const surveyData = JSON.parse(localStorage.getItem("survey") || '""');
-
-	useEffect(() => {
-		console.log(titleData);
-		console.log(surveyData);
-	}, []);
-
 	return (
 		<Container>
-			<h2>Preview</h2>
+			<PreviewSurvey />
 		</Container>
 	);
 };

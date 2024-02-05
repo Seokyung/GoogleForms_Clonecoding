@@ -1,20 +1,18 @@
 import React from "react";
-import TitleForm from "../Title/TitleForm";
-import QuestionList from "../Question/QuestionList";
-import Menu from "../Menu/Menu";
 import styled from "styled-components";
+import PreviewTitle from "../Title/PreviewTitle";
 
-const SurveyForm = () => {
+const PreviewSurvey = () => {
 	return (
 		<Container>
 			<SurveyContainer>
-				<Menu />
-				<TitleForm />
-				<QuestionList />
+				<PreviewTitle />
 			</SurveyContainer>
 		</Container>
 	);
 };
+
+export default PreviewSurvey;
 
 const Container = styled.div`
 	display: flex;
@@ -24,14 +22,10 @@ const Container = styled.div`
 `;
 
 const SurveyContainer = styled.div`
-	position: relative;
 	display: flex;
 	flex-direction: column;
 	align-items: end;
 	gap: 0.75rem;
-	margin-top: -104px;
 	width: auto;
 	height: auto;
 `;
-
-export default SurveyForm;
