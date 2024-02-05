@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { rootState } from "../../modules/reducers";
 import styled from "styled-components";
 import { ContentCopy, DeleteOutline } from "@mui/icons-material";
-import { Button, Divider, FormControlLabel, Switch } from "@mui/material";
+import { Divider, FormControlLabel, IconButton, Switch } from "@mui/material";
 
 interface IQuestionFooter {
 	questionIdx: number;
@@ -26,12 +26,12 @@ const QuestionFooter = (props: IQuestionFooter) => {
 	return (
 		<FooterContainer>
 			<div>
-				<Button onClick={props.onCopy}>
+				<IconButton onClick={props.onCopy} size="large">
 					<ContentCopy />
-				</Button>
-				<Button onClick={props.onDelete}>
+				</IconButton>
+				<IconButton onClick={props.onDelete} size="large">
 					<DeleteOutline />
-				</Button>
+				</IconButton>
 			</div>
 			<Divider orientation="vertical" />
 			<div>
@@ -51,6 +51,7 @@ const FooterContainer = styled.div`
 	display: flex;
 	justify-content: right;
 	align-items: center;
+	gap: 0.5rem;
 `;
 
 export default QuestionFooter;

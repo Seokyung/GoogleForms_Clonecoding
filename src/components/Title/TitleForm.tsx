@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { rootState } from "../../modules/reducers";
 import { changeDescription, changeTitle } from "../../modules/actions/title";
 import { TextField } from "@mui/material";
-import { SurveyBox } from "../../styles/SurveyBox";
 import styled from "styled-components";
 
 const TitleForm = () => {
@@ -30,7 +29,7 @@ const TitleForm = () => {
 	};
 
 	return (
-		<SurveyBox>
+		<TitleBox>
 			<StyledTextField
 				id="title"
 				variant="standard"
@@ -47,9 +46,23 @@ const TitleForm = () => {
 				value={description}
 				onChange={onTextChange}
 			/>
-		</SurveyBox>
+		</TitleBox>
 	);
 };
+
+const TitleBox = styled.div`
+	display: flex;
+	flex-direction: column;
+	width: 736px;
+	padding: 1rem 1.5rem;
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	border-top: 15px solid rgb(103, 58, 183);
+	border-radius: 10px;
+	background-color: #fff;
+	@media (max-width: 768px) {
+		width: 100%;
+	}
+`;
 
 const StyledTextField = styled(TextField)(({ id }) => ({
 	"& .MuiInputBase-input": {

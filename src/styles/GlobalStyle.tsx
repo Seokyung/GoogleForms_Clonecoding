@@ -8,7 +8,7 @@ export const GlobalStyle = createGlobalStyle`
   }
   body {
     color:#111;
-    background-color: lavender;
+    background-color: rgb(240, 235, 248);
   }
   a {
     outline: none;
