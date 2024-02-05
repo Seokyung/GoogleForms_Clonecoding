@@ -33,7 +33,7 @@ const Container = styled.div`
 	margin-top: 0.75rem;
 `;
 
-const StyledTextField = styled(TextField)(({ id }) => ({
+const StyledTextField = styled(TextField)(() => ({
 	"& .MuiInputBase-input": {
 		fontSize: "0.875rem",
 	},

@@ -5,6 +5,7 @@ import PreviewQuestion from "./PreviewQuestion";
 
 const PreviewQuestionList = () => {
 	const questionList = JSON.parse(localStorage.getItem("survey") || '""');
+
 	return (
 		<Container>
 			{questionList.map((item: IQuestion) => {

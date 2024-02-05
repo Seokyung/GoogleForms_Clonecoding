@@ -2,11 +2,14 @@ import { ITitle } from "../../interfaces/ITitle";
 import {
 	CHANGE_DESCRIPTION,
 	CHANGE_TITLE,
+	SET_TITLE_DATA,
 	changeDescription,
 	changeTitle,
+	setTitleData,
 } from "../actions/title";
 
 type TitleAction =
+	| ReturnType<typeof setTitleData>
 	| ReturnType<typeof changeTitle>
 	| ReturnType<typeof changeDescription>;
 
@@ -19,6 +22,8 @@ const initialState: TitleState = {
 
 function titleReducer(state: TitleState = initialState, action: TitleAction) {
 	switch (action.type) {
+		case SET_TITLE_DATA:
+			return action.payload.titleData;
 		case CHANGE_TITLE:
 			return { title: action.payload.title, description: state.description };
 		case CHANGE_DESCRIPTION:
