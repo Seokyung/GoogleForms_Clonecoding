@@ -1,10 +1,14 @@
-import React from "react";
-import { rootState } from "../modules/reducers";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 
 const PreviewPage = () => {
-	const questionList = useSelector((state: rootState) => state.questionReducer);
+	const titleData = JSON.parse(localStorage.getItem("title") || '""');
+	const surveyData = JSON.parse(localStorage.getItem("survey") || '""');
+
+	useEffect(() => {
+		console.log(titleData);
+		console.log(surveyData);
+	}, []);
 
 	return (
 		<Container>

@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addQuestion } from "../../modules/actions/question";
 import styled from "styled-components";
 import {
@@ -7,15 +7,20 @@ import {
 	RemoveRedEyeOutlined,
 } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
+import { rootState } from "../../modules/reducers";
 
 const Menu = () => {
 	const dispatch = useDispatch();
+	const titleData = useSelector((state: rootState) => state.titleReducer);
+	const surveyData = useSelector((state: rootState) => state.questionReducer);
 
 	const onAddQuestion = () => {
 		dispatch(addQuestion());
 	};
 
 	const onPreviewSurvey = () => {
+		window.localStorage.setItem("title", JSON.stringify(titleData));
+		window.localStorage.setItem("survey", JSON.stringify(surveyData));
 		window.open("http://localhost:3000/preview", "_blank");
 	};
 
