@@ -136,7 +136,7 @@ function questionReducer(
 			state[action.payload.idx] = {
 				...action.payload.question,
 				optionData: {
-					options: state[action.payload.idx].optionData.options.filter((el) => {
+					options: action.payload.optionList.filter((el) => {
 						return el.id !== action.payload.deleteId;
 					}),
 					isEtcAdded: state[action.payload.idx].optionData.isEtcAdded,
@@ -172,10 +172,9 @@ function questionReducer(
 			};
 			return state;
 		case UPDATE_QUESTION_OPTION_DATA:
-			state[action.payload.idx] = {
-				...action.payload.question,
-				optionData: action.payload.updatedData,
-			};
+			state[action.payload.idx].optionData.options[
+				action.payload.optionListIdx
+			].text = action.payload.updatedOptionText;
 			return state;
 		case TOGGLE_REQUIRED:
 			state[action.payload.idx] = {

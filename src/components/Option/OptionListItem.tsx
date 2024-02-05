@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useState } from "react";
 import { IOptionList } from "../../interfaces/IOptionList";
 import { useDispatch, useSelector } from "react-redux";
 import { rootState } from "../../modules/reducers";
@@ -9,24 +9,23 @@ import CloseIcon from "@mui/icons-material/Close";
 interface IOptionListItem {
 	questionIdx: number;
 	option: IOptionList;
-	listItemIdx: number;
+	optionListIdx: number;
 	deleteOption: (id: string, idx: number) => void;
 	renderOptionIcon: (idx: number) => ReactNode;
 }
 
 const OptionListItem = (props: IOptionListItem) => {
-	const question = useSelector(
-		(state: rootState) => state.questionReducer[props.questionIdx]
-	);
+	const dispatch = useDispatch();
 	const optionList = useSelector(
 		(state: rootState) =>
 			state.questionReducer[props.questionIdx].optionData.options
 	);
-	const dispatch = useDispatch();
+	const [optionText, setOptionText] = useState<string>(props.option.text);
 
 	const onTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { value } = e.target;
-		// dispatch(updateOptionData(props.questionIdx,question, value));
+		setOptionText(value);
+		dispatch(updateOptionData(props.questionIdx, props.optionListIdx, value));
 	};
 
 	return (
@@ -36,7 +35,7 @@ const OptionListItem = (props: IOptionListItem) => {
 					<IconButton
 						edge="end"
 						onClick={() =>
-							props.deleteOption(props.option.id, props.listItemIdx)
+							props.deleteOption(props.option.id, props.optionListIdx)
 						}
 					>
 						<CloseIcon />
@@ -44,18 +43,16 @@ const OptionListItem = (props: IOptionListItem) => {
 				)
 			}
 		>
-			{props.renderOptionIcon(props.listItemIdx)}
-			<ListItemText
-				primary={
-					<TextField
-						variant="standard"
-						value={props.option.text}
-						disabled={props.option.type === "etc"}
-						onChange={onTextChange}
-						fullWidth
-					/>
-				}
-			/>
+			{props.renderOptionIcon(props.optionListIdx)}
+			<ListItemText>
+				<TextField
+					variant="standard"
+					value={props.option.text}
+					disabled={props.option.type === "etc"}
+					onChange={onTextChange}
+					fullWidth
+				/>
+			</ListItemText>
 		</ListItem>
 	);
 };

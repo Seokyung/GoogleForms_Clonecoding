@@ -1,6 +1,5 @@
 import { nanoid } from "nanoid";
 import { IQuestion } from "../../interfaces/IQuestion";
-import { IOptionData } from "../../interfaces/IOptionData";
 
 // QuestionList
 export const GET_QUESTION = "question/GET_QUESTION" as const;
@@ -103,6 +102,7 @@ export const deleteOption = (
 	payload: {
 		idx: questionIdx,
 		question: question,
+		optionList: question.optionData.options,
 		deleteId: deleteId,
 	},
 });
@@ -125,14 +125,14 @@ export const deleteEtc = (questionIdx: number, question: IQuestion) => ({
 
 export const updateOptionData = (
 	questionIdx: number,
-	question: IQuestion,
-	updatedData: IOptionData
+	optionListIdx: number,
+	updatedOptionText: string
 ) => ({
 	type: UPDATE_QUESTION_OPTION_DATA,
 	payload: {
 		idx: questionIdx,
-		question: question,
-		updatedData: updatedData,
+		optionListIdx: optionListIdx,
+		updatedOptionText: updatedOptionText,
 	},
 });
 
