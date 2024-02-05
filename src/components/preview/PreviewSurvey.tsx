@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import PreviewTitle from "./PreviewTitle";
 import PreviewQuestionList from "./PreviewQuestionList";
+import PreviewFooter from "./PreviewFooter";
 
 const PreviewSurvey = () => {
 	return (
@@ -9,6 +10,7 @@ const PreviewSurvey = () => {
 			<SurveyContainer>
 				<PreviewTitle />
 				<PreviewQuestionList />
+				<PreviewFooter />
 			</SurveyContainer>
 		</Container>
 	);
@@ -26,7 +28,6 @@ const Container = styled.div`
 const SurveyContainer = styled.div`
 	display: flex;
 	flex-direction: column;
-	align-items: end;
 	gap: 0.75rem;
 	width: auto;
 	height: auto;

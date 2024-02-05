@@ -35,7 +35,6 @@ const PreviewOptionList = (props: IPreviewOptionList) => {
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const isOpened = Boolean(anchorEl);
 	const [dropdownValue, setDropdownValue] = useState<string>("선택");
-
 	const [etcText, setEtcText] = useState<string>("");
 
 	const openOptionMenu = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -73,10 +72,10 @@ const PreviewOptionList = (props: IPreviewOptionList) => {
 
 	const renderEtc = () => {
 		return (
-			<div>
+			<EtcBox>
 				<span>기타:</span>
 				<TextField variant="standard" value={etcText} onChange={onTextChange} />
-			</div>
+			</EtcBox>
 		);
 	};
 
@@ -190,4 +189,12 @@ const Container = styled.div`
 	display: flex;
 	flex-direction: column;
 	width: auto;
+`;
+
+const EtcBox = styled.div`
+	display: flex;
+	align-items: center;
+	span {
+		margin-right: 1.25rem;
+	}
 `;
