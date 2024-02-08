@@ -1,4 +1,11 @@
-## [클라썸 / 웹 개발 과제] 구글 설문조사
+## 구글폼 클론코딩
+
+#### 사용 스택
+
+- TypeScript
+- React
+- Redux
+- Styled Components
 
 #### 구현 사항
 
