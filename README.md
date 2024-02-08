@@ -1,4 +1,4 @@
-## 구글폼 클론코딩
+# 구글폼 클론코딩
 
 #### 사용 스택
 
@@ -20,19 +20,25 @@
 
 #### 설치 및 실행 방법
 
-1. 프로젝트 설치
+1. 깃허브 레포 clone
+
+```
+git clone https://github.com/Seokyung/GoogleForms_Clonecoding.git
+```
+
+2. dependency 설치
 
 ```
 npm install
 ```
 
-2. 로컬 서버 실행
+3. 로컬 서버 실행
 
 ```
 npm start
 ```
 
-3. 브라우저에서 열기
+4. 브라우저에서 열기
 
 ```
 http://localhost:3000
