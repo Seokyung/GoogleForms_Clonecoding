@@ -1,11 +1,19 @@
 # 구글폼 클론코딩
 
+---
+
+### TypeScript와 React를 사용해 만든 구글폼 설문지 클론 웹
+
+---
+
 #### 사용 스택
 
 - TypeScript
 - React
 - Redux
 - Styled Components
+
+---
 
 #### 구현 사항
 
